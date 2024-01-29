@@ -1,12 +1,13 @@
 import {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const BoardPage = () => {
+const BoardPage = ({...props}) => {
     const params = useParams();
+    const route = useNavigate();
     const [board, setBoard] = useState();
 
     useEffect(() => {
-        setBoard([{title: "a"}]);
+        setBoard(undefined);
     }, [])
 
     return (
