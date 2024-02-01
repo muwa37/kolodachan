@@ -16,6 +16,11 @@ const Navbar = () => {
                         all boards
                     </Link>
                     <Link 
+                        to='/threads'
+                    >
+                        all threads
+                    </Link>
+                    <Link 
                         to='/about'
                     >
                         about

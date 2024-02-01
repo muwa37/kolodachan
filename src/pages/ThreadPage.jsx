@@ -1,21 +1,16 @@
-import {useState, useEffect} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useState} from 'react';
+import {useParams} from 'react-router-dom';
+import {getOneThread} from '../API/threads'
 
 const ThreadPage = ({...props}) => {
     const params = useParams();
-    const route = useNavigate();
-    const [thread, setThread] = useState();
-
-    useEffect(() => {
-        setThread(undefined);
-    }, [])
-
+    const [thread, setBoard] = useState(getOneThread(Number(params.threadId)));
+    
     return (
         <div>
-            thread page
-            <div>{thread.threadId}</div>
-            {thread.title}
-            
+            board page
+            <div>url id: {params.threadId}</div>
+            title: {thread.title}
         </div>
     )
 }
