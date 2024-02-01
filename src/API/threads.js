@@ -6,17 +6,17 @@ export function getThreads() {
             board: 'a',
         },
         {
-            id: 1,
+            id: 2,
             title: 'a 2nd thread',
             board: 'a',
         },
         {
-            id: 1,
+            id: 3,
             title: 'b 1st thread',
             board: 'b',
         },
         {
-            id: 1,
+            id: 4,
             title: 'b 2nd thread',
             board: 'b',
         },
