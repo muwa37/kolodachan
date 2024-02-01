@@ -2,12 +2,24 @@ export function getThreads() {
     const threads = [
         {
             id: 1,
-            title: '1st thread',
+            title: 'a 1st thread',
+            board: 'a',
         },
         {
-            id: 2,
-            title: '2nd thread'
-        }
+            id: 1,
+            title: 'a 2nd thread',
+            board: 'a',
+        },
+        {
+            id: 1,
+            title: 'b 1st thread',
+            board: 'b',
+        },
+        {
+            id: 1,
+            title: 'b 2nd thread',
+            board: 'b',
+        },
     ];
 
     return threads;

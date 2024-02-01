@@ -1,22 +1,23 @@
 import React from 'react';
 
-const BoardHeader = () => {
+const ThreadComment = () => {
     return (
         <div>
             <div>
-                board logo
+                thread replay sample:
             </div>
             <div>
-                board title
+                replay data
             </div>
             <div>
-                board pinned info
+                replay attachments
             </div>
             <div>
-                board post form
+                replay text
             </div>
+            
         </div>
     )
 }
 
-export default BoardHeader;
+export default ThreadComment;

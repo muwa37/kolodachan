@@ -1,12 +1,11 @@
-import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {getOneBoard} from '../API/boards.js';
-import BoardThreadList from '../components/board/BoardThreadList.jsx';
+import BoardThreadsList from '../components/board/BoardThreadsList.jsx';
 import BoardHeader from '../components/board/BoardHeader';
 
-const BoardPage = ({...props}) => {
+const BoardPage = () => {
     const params = useParams();
-    const [board, setBoard] = useState(getOneBoard(params.boardId));
+    const board = getOneBoard(params.boardId);
 
     return (
         <div>
@@ -18,7 +17,7 @@ const BoardPage = ({...props}) => {
                 title: {board.title}
             </div>
             <BoardHeader/>
-            <BoardThreadList/>
+            <BoardThreadsList/>
         </div>
     )
 }

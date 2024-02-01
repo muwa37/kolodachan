@@ -1,22 +1,22 @@
 import React from 'react';
 
-const BoardHeader = () => {
+const ThreadBody = () => {
     return (
         <div>
             <div>
-                board logo
+                thread navigation
             </div>
             <div>
-                board title
+                thread title
             </div>
             <div>
-                board pinned info
+                thread attachments
             </div>
             <div>
-                board post form
+                thread text
             </div>
         </div>
     )
 }
 
-export default BoardHeader;
+export default ThreadBody;
