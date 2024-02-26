@@ -1,1 +1,0 @@
-fronted app for AIB with react, redux, react-query and tailwind
