@@ -2,12 +2,12 @@ export function getBoards() {
   const boards = [
     {
       title: 'a',
-      id: 'a'
+      id: 'a',
     },
     {
       title: 'b',
-      id: 'b'
-    }
+      id: 'b',
+    },
   ];
 
   return boards;
@@ -15,5 +15,5 @@ export function getBoards() {
 
 export function getOneBoard(id) {
   const boards = getBoards();
-  return boards.find(board => board.id === id)
+  return boards.find(board => board.id === id);
 }
