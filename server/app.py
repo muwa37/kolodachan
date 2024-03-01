@@ -20,9 +20,6 @@ async def get_thread(board, thread):
     return
 
 
-print('test')
-
-
 @app.get("/{board}/{thread}/{post}")
 async def get_post(board, thread, post):
     return {"board": board, "thread": thread, "post": post}
