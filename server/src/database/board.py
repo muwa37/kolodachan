@@ -1,24 +1,16 @@
-import tomllib
-
 import psycopg
 from psycopg import sql
 from psycopg.rows import dict_row
+from util import Database
 
 
-class Database:
+class Board:
 
     def __init__(self):
-        with open('.config.toml', 'rb') as f:
-            data = tomllib.load(f)['postgre']
+        self.db = Database('.config')
 
-        self.host = data['host']
-        self.port = data['port']
-        self.user = data['user']
-        self.password = data['password']
-        self.dbname = data['dbname']
-
-    def create_board(self, name, title, description):
-        conn = self._create_connection()
+    def create(self, name, title, description):
+        conn = self.db.create_connection()
 
         with conn.cursor() as cur:
             cur.execute(
@@ -30,8 +22,8 @@ class Database:
             conn.commit()
             conn.close()
 
-    def get_board(self, name):
-        conn = self._create_connection()
+    def get(self, name):
+        conn = self.db.create_connection()
 
         with conn.cursor(row_factory=dict_row) as cur:
             cur.execute(
@@ -43,16 +35,20 @@ class Database:
                         default_nickname,
                         allow_change_nickname,
                         bumplimit,
-                        max_message_length
+                        max_message_length,
+                        enabled
                     FROM boards
                     WHERE name = %s;
                         ''', (name, ))
             result = cur.fetchone()
 
+        conn.close()
+
+        if result['enabled']:
             return result
 
-    def update_board(self, name, data):
-        conn = self._create_connection()
+    def update(self, name, data):
+        conn = self.db.create_connection()
 
         with conn.cursor() as cur:
             for column, value in data.items():
@@ -64,32 +60,16 @@ class Database:
             conn.commit()
             conn.close()
 
-    def delete_board(self):
+    def delete(self):
         pass
-
-    def _create_connection(self):
-        try:
-            conn = psycopg.connect(
-                host=self.host,
-                port=self.port,
-                user=self.user,
-                password=self.password,
-                dbname=self.dbname,
-            )
-
-        except psycopg.DatabaseError as e:
-            print(e)
-
-        else:
-            return conn
 
 
 if __name__ == "__main__":
-    db = Database()
+    db = Board()
     test = {
         'title': 'games',
         'description': 'igraem v igrushki',
     }
-    print(db.get_board('vg'))
-    db.update_board('vg', test)
-    print(db.get_board('vg'))
+    print(db.get('vg'))
+    db.update('vg', test)
+    print(db.get('vg'))
