@@ -1,6 +1,7 @@
 import tomllib
 
 import psycopg
+from psycopg import sql
 from psycopg.rows import dict_row
 
 
@@ -8,8 +9,13 @@ class Database:
 
     def __init__(self):
         with open('.config.toml', 'rb') as f:
-            data = tomllib.load(f)
-        print(data)
+            data = tomllib.load(f)['postgre']
+
+        self.host = data['host']
+        self.port = data['port']
+        self.user = data['user']
+        self.password = data['password']
+        self.dbname = data['dbname']
 
     def create_board(self, name, title, description):
         conn = self._create_connection()
@@ -45,8 +51,18 @@ class Database:
 
             return result
 
-    def update_board(self):
-        pass
+    def update_board(self, name, data):
+        conn = self._create_connection()
+
+        with conn.cursor() as cur:
+            for column, value in data.items():
+                print(column, value, name)
+                cur.execute(
+                    sql.SQL(
+                        'UPDATE boards SET {} = %s WHERE name = %s').format(
+                            sql.Identifier(column)), (value, name))
+            conn.commit()
+            conn.close()
 
     def delete_board(self):
         pass
@@ -54,11 +70,11 @@ class Database:
     def _create_connection(self):
         try:
             conn = psycopg.connect(
-                host='192.168.0.108',
-                port='5432',
-                user='nkyume',
-                password='Madoka10iz10',
-                dbname='kolodachan',
+                host=self.host,
+                port=self.port,
+                user=self.user,
+                password=self.password,
+                dbname=self.dbname,
             )
 
         except psycopg.DatabaseError as e:
@@ -70,3 +86,10 @@ class Database:
 
 if __name__ == "__main__":
     db = Database()
+    test = {
+        'title': 'games',
+        'description': 'igraem v igrushki',
+    }
+    print(db.get_board('vg'))
+    db.update_board('vg', test)
+    print(db.get_board('vg'))

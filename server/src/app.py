@@ -14,10 +14,6 @@ async def get_board(board, t_skip=0, t_step=10, p_limit=3):
     return threads
 
 
-def test():
-    pass
-
-
 @app.get("/{board}/{thread}")
 async def get_thread(board, thread):
     """Returns thread"""
