@@ -1,6 +1,7 @@
 CREATE TABLE boards (
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL CHECK (length(name) < 10),
+    uuid UUID NOT NULL DEFAULT uuid_generate_v4()
+    tag TEXT NOT NULL UNIQUE CHECK (length(tag) < 10),
     title TEXT NOT NULL CHECK (length(title) < 40),
     description TEXT NOT NULL CHECK(length(description) < 500),
     default_nickname TEXT NOT NULL DEFAULT 'Anonymous' CHECK (length(default_nickname) < 30),
@@ -35,12 +36,13 @@ CREATE OR REPLACE FUNCTION get_new_post_number(thread_qid INT)
     AS
       $$
       BEGIN
-          RETURN QUERY SELECT post_number + 1
+          RETURN QUERY SELECT p.post_number + 1
               FROM posts AS p
               JOIN threads AS t ON p.thread_id = t.id
               JOIN boards AS b ON t.board_id = b.id
-              WHERE t.id = thread_qid AND b.id = t.board_id
-              ORDER BY post_number DESC
+                WHERE b.id = (SELECT b.id FROM boards as b JOIN threads AS t ON t.board_id = b.id WHERE t.id = thread_qid)
+                AND b.id = t.board_id
+              ORDER BY p.post_number DESC
               LIMIT 1;
           IF NOT FOUND THEN
               RETURN QUERY SELECT 0;

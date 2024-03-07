@@ -1,31 +1,46 @@
+from database import Database
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from models import Post
 
 app = FastAPI()
-favicon_path = "favicon.ico"
+
+db = Database()
 
 
-@app.get("/{board}/")
-async def get_board(board, t_skip=0, t_step=10, p_limit=3):
-    tmp_threads = board[t_skip:t_skip + t_step]
-    threads = []
-    for thread in tmp_threads:
-        threads.append(thread[0:1:] + thread[-p_limit::])
-    return threads
+@app.get('/boards')
+def get_boards():
+    '''Returns boards'''
+
+    return db.board.get_all()
 
 
-@app.get("/{board}/{thread}")
-async def get_thread(board, thread):
-    """Returns thread"""
+@app.get('/boards/{tag}')
+def get_board(tag):
+    '''Returns board'''
+    return db.board.get_one(tag)
+
+
+@app.get("/boards/{tag}/threads")
+def get_treads(tag, t_skip=0, t_step=10, p_limit=3):
+    '''Returns threads'''
+    pass
+
+
+@app.get("/boards/{tag}/threads/{id}")
+def get_thread(board, thread):
+    """Returns single thread"""
     return
 
 
-@app.get("/{board}/{thread}/{post}")
-async def get_post(board, thread, post):
+@app.post('/boards/{tag}/threads')
+def create_thread(tag, post: Post):
+    post = post.dict()
+    id = db.thread.create(tag)
+    print(post)
+    db.post.create(id, post)
+
+
+@app.get("/boards/{tag}/threads/{id}/")
+def get_post(board, thread, post):
     return {"board": board, "thread": thread, "post": post}
-
-
-@app.get("/favicon.ico")
-async def favicon():
-    file_path = "favicon.ico"
-    return FileResponse(path=file_path)

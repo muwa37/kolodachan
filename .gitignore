@@ -20,3 +20,5 @@
 /server/.venv
 /server/.config.toml
 
+__pycache__/
+.pyc

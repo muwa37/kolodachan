@@ -1,35 +1,53 @@
-import psycopg
 from psycopg import sql
 from psycopg.rows import dict_row
-from util import Database
+
+from .util import Database
 
 
 class Board:
 
     def __init__(self):
-        self.db = Database('.config')
+        self._db = Database()
 
-    def create(self, name, title, description):
-        conn = self.db.create_connection()
+    def create(self, tag: str, title: str, description: str):
+        conn = self._db.create_connection()
 
         with conn.cursor() as cur:
             cur.execute(
                 '''
-                INSERT INTO boards (name, title, description)
+                INSERT INTO boards (tag, title, description)
                 VALUES(%s, %s, %s)
-                ''', (name, title, description))
+                ''', (tag, title, description))
 
             conn.commit()
             conn.close()
 
-    def get(self, name):
-        conn = self.db.create_connection()
+    def get_all(self):
+        conn = self._db.create_connection()
+
+        with conn.cursor(row_factory=dict_row) as cur:
+            cur.execute('''
+                    SELECT
+                        tag,
+                        title
+                    FROM boards
+                    WHERE
+                        enabled = true
+                        ''')
+
+            result = cur.fetchall()
+
+        conn.close()
+        return result
+
+    def get_one(self, tag: str):
+        conn = self._db.create_connection()
 
         with conn.cursor(row_factory=dict_row) as cur:
             cur.execute(
                 '''
                     SELECT
-                        name,
+                        tag,
                         title,
                         description,
                         default_nickname,
@@ -38,38 +56,39 @@ class Board:
                         max_message_length,
                         enabled
                     FROM boards
-                    WHERE name = %s;
-                        ''', (name, ))
+                    WHERE tag = %s AND enabled = true;
+                        ''', (tag, ))
             result = cur.fetchone()
 
         conn.close()
 
+        if not result:
+            return
+
         if result['enabled']:
             return result
 
-    def update(self, name, data):
-        conn = self.db.create_connection()
+    def update(self, tag: str, data):
+        conn = self._db.create_connection()
 
         with conn.cursor() as cur:
             for column, value in data.items():
-                print(column, value, name)
+                print(column, value, tag)
                 cur.execute(
                     sql.SQL(
                         'UPDATE boards SET {} = %s WHERE name = %s').format(
-                            sql.Identifier(column)), (value, name))
+                            sql.Identifier(column)), (value, tag))
             conn.commit()
             conn.close()
 
-    def delete(self):
-        pass
+    def delete(self, tag):
+        conn = self._db.create_connection()
+
+        with conn.cursor() as cur:
+            cur.execute('UPDATE BOARDS SET enabled = false WHERE tag = %s',
+                        (tag, ))
 
 
 if __name__ == "__main__":
     db = Board()
-    test = {
-        'title': 'games',
-        'description': 'igraem v igrushki',
-    }
-    print(db.get('vg'))
-    db.update('vg', test)
-    print(db.get('vg'))
+    db.create('1', 'test', 'test')

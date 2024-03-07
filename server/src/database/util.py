@@ -4,8 +4,9 @@ import psycopg
 
 
 class Database:
-    def __init__(self, config):
-        with open(f'{config}.toml', 'rb') as f:
+
+    def __init__(self):
+        with open('../.config.toml', 'rb') as f:
             data = tomllib.load(f)['postgre']
 
         self.host = data['host']
@@ -14,7 +15,7 @@ class Database:
         self.password = data['password']
         self.dbname = data['dbname']
 
-    def create_connection(self):
+    def create_connection(self) -> psycopg.Connection:
         try:
             conn = psycopg.connect(
                 host=self.host,
