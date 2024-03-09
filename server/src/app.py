@@ -1,6 +1,5 @@
 from database import Database
-from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, status
 from models import Post
 
 app = FastAPI()
@@ -33,12 +32,23 @@ def get_thread(board, thread):
     return
 
 
-@app.post('/boards/{tag}/threads')
+@app.post('/boards/{tag}/threads', status_code=201)
 def create_thread(tag, post: Post):
     post = post.dict()
     id = db.thread.create(tag)
-    print(post)
     db.post.create(id, post)
+
+
+@app.post('/board/{tag}/threads/{id}}', status_code=201)
+def create_post(tag, id, post: Post):
+    # find thread_id where post_id == 1 (first) post in that thread
+    # (probably temporary solution)
+    thread_id = db.thread.get(tag, id)
+    if not thread_id:
+        return status.HTTP_404_NOT_FOUND
+    print(thread_id)
+    post = post.dict()
+    db.post.create(thread_id, post)
 
 
 @app.get("/boards/{tag}/threads/{id}/")

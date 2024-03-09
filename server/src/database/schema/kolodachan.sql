@@ -1,6 +1,5 @@
 CREATE TABLE boards (
     id SERIAL PRIMARY KEY,
-    uuid UUID NOT NULL DEFAULT uuid_generate_v4()
     tag TEXT NOT NULL UNIQUE CHECK (length(tag) < 10),
     title TEXT NOT NULL CHECK (length(title) < 40),
     description TEXT NOT NULL CHECK(length(description) < 500),
@@ -17,7 +16,8 @@ CREATE TABLE boards (
 CREATE TABLE threads(
     id SERIAL PRIMARY KEY,
     board_id INTEGER REFERENCES boards(id),
-    creation_date TIMESTAMP NOT NULL DEFAULT now()
+    creation_date TIMESTAMP NOT NULL DEFAULT now(),
+    bump_date TIMESTAMP
 );
 
 
@@ -27,6 +27,9 @@ CREATE TABLE posts (
     post_number INTEGER NOT NULL,
     title TEXT NOT NULL CHECK(length(title) < 200),
     message TEXT NOT NULL CHECK(length(message) < 8192),
+    poster_name TEXT NOT NULL CHECK(length(poster_name) < 40),
+    file TEXT,
+    sage BOOLEAN NOT NULL DEFAULT false,
     creation_date TIMESTAMP NOT NULL DEFAULT now()
 );
 
@@ -68,3 +71,20 @@ CREATE TRIGGER "update_post_number_on_insert"
     FOR EACH ROW
     EXECUTE PROCEDURE "set_new_post_number"();
 
+CREATE OR REPLACE FUNCTION update_bump_date()
+RETURNS trigger AS
+$$
+BEGIN
+IF new.sage = false THEN
+  UPDATE threads
+    SET bump_date = now()
+    WHERE id = new.thread_id;
+RETURN NULL;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER update_bump_date
+AFTER INSERT ON posts
+FOR EACH ROW
+EXECUTE PROCEDURE update_bump_date();
