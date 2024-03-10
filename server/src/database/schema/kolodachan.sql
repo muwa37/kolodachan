@@ -71,14 +71,40 @@ CREATE TRIGGER "update_post_number_on_insert"
     FOR EACH ROW
     EXECUTE PROCEDURE "set_new_post_number"();
 
+CREATE OR REPLACE FUNCTION bump_limit(thread_qid INT)
+RETURNS BOOLEAN AS
+$$
+DECLARE number_of_posts INT;
+DECLARE board_bumplimit INT;
+BEGIN
+  SELECT count(1) INTO number_of_posts 
+  FROM posts 
+  WHERE thread_id = thread_qid;
+
+  SELECT bumplimit INTO board_bumplimit 
+    FROM boards 
+    WHERE id = (
+      SELECT board_id FROM threads
+      WHERE id = thread_qid);
+
+IF number_of_posts >= board_bumplimit THEN
+  RETURN true;
+ELSE
+  RETURN false;
+END IF;
+END;
+$$
+LANGUAGE plpgsql;
+
 CREATE OR REPLACE FUNCTION update_bump_date()
 RETURNS trigger AS
 $$
 BEGIN
-IF new.sage = false THEN
+IF new.sage = false AND bump_limit(new.thread_id) = false THEN
   UPDATE threads
     SET bump_date = now()
     WHERE id = new.thread_id;
+END IF;
 RETURN NULL;
 END;
 $$

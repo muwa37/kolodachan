@@ -34,9 +34,17 @@ def get_thread(board, thread):
 
 @app.post('/boards/{tag}/threads', status_code=201)
 def create_thread(tag, post: Post):
+    board = db.board.get_one(tag)
+    if not board:
+        return status.HTTP_404_NOT_FOUND
+
     post = post.dict()
-    id = db.thread.create(tag)
-    db.post.create(id, post)
+    thread_id = db.thread.create(tag)
+    if not post['name'] == board['default_nickname'] and not board[
+            'allow_change_nickname']:
+        post['name'] = board['default_nickname']
+
+    db.post.create(thread_id, post)
 
 
 @app.post('/board/{tag}/threads/{id}}', status_code=201)
@@ -46,8 +54,13 @@ def create_post(tag, id, post: Post):
     thread_id = db.thread.get(tag, id)
     if not thread_id:
         return status.HTTP_404_NOT_FOUND
-    print(thread_id)
     post = post.dict()
+
+    board = db.board.get_one(tag)
+    if not post['name'] == board['default_nickname'] and not board[
+            'allow_change_nickname']:
+        post['name'] = board['default_nickname']
+
     db.post.create(thread_id, post)
 
 
