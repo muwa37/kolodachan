@@ -23,6 +23,7 @@ CREATE TABLE threads(
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
+    post_id INTEGER NOT NULL,
     thread_id INTEGER REFERENCES threads(id),
     post_number INTEGER NOT NULL,
     title TEXT NOT NULL CHECK(length(title) < 200),
@@ -34,32 +35,45 @@ CREATE TABLE posts (
 );
 
 
-CREATE OR REPLACE FUNCTION get_new_post_number(thread_qid INT)
-  RETURNS SETOF INTEGER
-    AS
-      $$
-      BEGIN
-          RETURN QUERY SELECT p.post_number + 1
-              FROM posts AS p
-              JOIN threads AS t ON p.thread_id = t.id
-              JOIN boards AS b ON t.board_id = b.id
-                WHERE b.id = (SELECT b.id FROM boards as b JOIN threads AS t ON t.board_id = b.id WHERE t.id = thread_qid)
-                AND b.id = t.board_id
-              ORDER BY p.post_number DESC
-              LIMIT 1;
-          IF NOT FOUND THEN
-              RETURN QUERY SELECT 0;
-          END IF;
-      END;
-      $$
-      LANGUAGE plpgsql;
+CREATE OR REPLACE FUNCTION set_post_id()
+  RETURNS TRIGGER AS
+  $$
+  BEGIN
+    SELECT count(1) INTO new.post_id
+    FROM posts
+    WHERE thread_id = NEW.thread_id;
+  RETURN NEW;
+  END;
+  $$
+LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE TRIGGER "set_post_id"
+  BEFORE INSERT ON posts
+  FOR EACH ROW
+    EXECUTE PROCEDURE "set_post_id"();
 
 
 CREATE OR REPLACE FUNCTION set_new_post_number()
 RETURNS trigger AS
 $$
+DECLARE last_post_number INT; 
 BEGIN
-NEW.post_number = get_new_post_number(NEW.thread_id);
+  SELECT p.post_number INTO last_post_number
+  FROM posts AS p 
+  JOIN threads AS t ON t.id = p.thread_id
+    WHERE t.board_id = (
+      SELECT board_id
+      FROM threads
+      WHERE id = NEW.thread_id)
+  ORDER BY p.post_number DESC
+  LIMIT 1;
+
+  IF NOT FOUND THEN
+    NEW.post_number = 0;
+  ELSE
+    NEW.post_number = last_post_number + 1;
+  END IF;
 RETURN NEW;
 END;
 $$
@@ -70,6 +84,7 @@ CREATE TRIGGER "update_post_number_on_insert"
     BEFORE INSERT ON posts
     FOR EACH ROW
     EXECUTE PROCEDURE "set_new_post_number"();
+
 
 CREATE OR REPLACE FUNCTION bump_limit(thread_qid INT)
 RETURNS BOOLEAN AS
@@ -86,15 +101,15 @@ BEGIN
     WHERE id = (
       SELECT board_id FROM threads
       WHERE id = thread_qid);
-
-IF number_of_posts >= board_bumplimit THEN
-  RETURN true;
-ELSE
-  RETURN false;
-END IF;
+  IF number_of_posts >= board_bumplimit THEN
+    RETURN true;
+  ELSE
+    RETURN false;
+  END IF;
 END;
 $$
 LANGUAGE plpgsql;
+
 
 CREATE OR REPLACE FUNCTION update_bump_date()
 RETURNS trigger AS
@@ -109,6 +124,7 @@ RETURN NULL;
 END;
 $$
 LANGUAGE plpgsql;
+
 
 CREATE TRIGGER update_bump_date
 AFTER INSERT ON posts
