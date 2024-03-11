@@ -1,5 +1,5 @@
 from database import Database
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Response, status
 from models import Post
 
 app = FastAPI()
@@ -33,10 +33,11 @@ def get_thread(board, thread):
 
 
 @app.post('/boards/{tag}/threads', status_code=201)
-def create_thread(tag, post: Post):
+def create_thread(tag, post: Post, responce: Response):
     board = db.board.get_one(tag)
     if not board:
-        return status.HTTP_404_NOT_FOUND
+        responce.status_code = status.HTTP_404_NOT_FOUND
+        return
 
     post = post.dict()
     thread_id = db.thread.create(tag)
@@ -48,14 +49,15 @@ def create_thread(tag, post: Post):
 
 
 @app.post('/board/{tag}/threads/{id}}', status_code=201)
-def create_post(tag, id, post: Post):
+def create_post(tag, id, post: Post, responce: Response):
     # find thread_id where post_id == 1 (first) post in that thread
     # (probably temporary solution)
     thread_id = db.thread.get(tag, id)
     if not thread_id:
-        return status.HTTP_404_NOT_FOUND
-    post = post.dict()
+        responce.status_code = status.HTTP_404_NOT_FOUND
+        return
 
+    post = post.dict()
     board = db.board.get_one(tag)
     if not post['name'] == board['default_nickname'] and not board[
             'allow_change_nickname']:
