@@ -81,9 +81,9 @@ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER "update_post_number_on_insert"
-    BEFORE INSERT ON posts
-    FOR EACH ROW
-    EXECUTE PROCEDURE "set_new_post_number"();
+  BEFORE INSERT ON posts
+  FOR EACH ROW
+  EXECUTE PROCEDURE "set_new_post_number"();
 
 
 CREATE OR REPLACE FUNCTION bump_limit(thread_qid INT)
@@ -127,6 +127,6 @@ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER update_bump_date
-AFTER INSERT ON posts
-FOR EACH ROW
-EXECUTE PROCEDURE update_bump_date();
+  AFTER INSERT ON posts
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_bump_date();

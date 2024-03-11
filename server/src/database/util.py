@@ -21,14 +21,6 @@ class Database:
         self.password = data['password']
         self.dbname = data['dbname']
 
-        self.conn = psycopg.connect(
-            host=self.host,
-            port=self.port,
-            user=self.user,
-            password=self.password,
-            dbname=self.dbname,
-        )
-
     def create_connection(self) -> psycopg.Connection:
         try:
             conn = psycopg.connect(
@@ -44,3 +36,22 @@ class Database:
 
         else:
             return conn
+
+    def execute(self,
+                method: str,
+                query: str,
+                params: tuple = None,
+                row_factory: psycopg.rows.RowFactory = psycopg.rows.tuple_row):
+        result = None
+        conn = self.create_connection()
+        if not conn:
+            return
+        with conn.cursor(row_factory=row_factory) as cur:
+            cur.execute(query, params)
+            if 'create' in method or 'update' in method:
+                conn.commit()
+            if 'read' in method:
+                result = cur.fetchall()
+                if len(result) == 1:
+                    result = result[0]
+        return result

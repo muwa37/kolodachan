@@ -5,42 +5,39 @@ class Thread:
 
     def __init__(self):
         self.db = Database()
-        self.conn = self.db.conn
 
-    def create(self, tag: str) -> int:
-        with self.conn.cursor() as cur:
-            cur.execute(
-                '''
-                        INSERT INTO threads(board_id)
-                        VALUES((SELECT id FROM BOARDS WHERE tag = %s))
-                        RETURNING id
-                        ''', (tag, ))
-            thread_id = cur.fetchone()[0]
-        self.conn.commit()
+    def create(self, board_id: int) -> int:
+        query = '''
+            INSERT INTO threads(board_id)
+            VALUES(%s)
+            RETURNING id
+        '''
+        thread_id = self.db.execute('create and read', query, (board_id, ))
 
-        return thread_id
+        return thread_id[0]
 
-    def get(self, tag, id):
-        with self.conn.cursor() as cur:
-            cur.execute(
-                '''
-                            SELECT p.thread_id
-                            FROM posts as p
-                            JOIN threads as t
-                            ON p.thread_id = t.id
-                            JOIN boards as b
-                            ON t.board_id = b.id
-                            WHERE p.post_number = %s AND b.tag = %s
-                            ORDER BY p.creation_date ASC
-                            LIMIT 1
-                        ''', (id, tag))
-            result = cur.fetchone()
-        if not result:
-            return
+    def get(self, board_id, post_number) -> int:
+        query = '''
+            SELECT p.thread_id
+            FROM posts as p
+            JOIN threads as t
+            ON p.thread_id = t.id
+            WHERE t.board_id = %s AND p.post_number = %s
+            ORDER BY p.creation_date ASC
+            LIMIT 1
+        '''
+        result = self.db.execute('read', query, (board_id, post_number))
+        return result
 
-        return result[0]
-
-
-if __name__ == "__main__":
-    t = Thread()
-    t.create('a')
+    def get_multiple(self, board_id, limit, step) -> list:
+        query = '''
+            SELECT id
+            FROM threads
+            WHERE board_id = %s
+            ORDER BY bump_date DESC
+            LIMIT %s
+            OFFSET %s
+        '''
+        result = self.db.execute('read', query, (board_id, limit, step))
+        result = list([id[0] for id in result])
+        return result
