@@ -19,7 +19,7 @@ def get_board(tag):
     return db.board.get_one(tag)
 
 
-@router.get("/{tag}/threads", tags=['thread'], response_model=Thread)
+@router.get("/{tag}/threads", tags=['thread'])
 def get_treads(tag,
                response: Response,
                limit: int = 10,
