@@ -1,13 +1,18 @@
+DROP TABLE comments;
+DROP TABLE threads;
+DROP TABLE boards;
+
 CREATE TABLE boards (
     id SERIAL PRIMARY KEY,
     tag TEXT NOT NULL UNIQUE CHECK (length(tag) < 10),
     title TEXT NOT NULL CHECK (length(title) < 40),
     description TEXT NOT NULL CHECK(length(description) < 500),
-    default_nickname TEXT NOT NULL DEFAULT 'Anonymous' CHECK (length(default_nickname) < 30),
-    allow_change_nickname BOOLEAN NOT NULL DEFAULT true,
+    default_name TEXT NOT NULL DEFAULT 'Аноним' CHECK (length(default_name) < 30),
+    name_change_allowed BOOLEAN NOT NULL DEFAULT true,
     max_threads INTEGER NOT NULL DEFAULT 100,
     bumplimit INTEGER NOT NULL DEFAULT 500,
     max_message_length INTEGER NOT NULL DEFAULT 8192,
+    max_file_size INTEGER NOT NULL DEFAULT 3145728,
     enabled BOOLEAN NOT NULL DEFAULT true,
     creation_date TIMESTAMP NOT NULL DEFAULT now()
     );
@@ -21,26 +26,26 @@ CREATE TABLE threads(
 );
 
 
-CREATE TABLE posts (
+CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
-    post_id INTEGER NOT NULL,
+    comment_id INTEGER NOT NULL,
     thread_id INTEGER REFERENCES threads(id),
-    post_number INTEGER NOT NULL,
+    comment_number INTEGER NOT NULL,
     title TEXT NOT NULL CHECK(length(title) < 200),
     message TEXT NOT NULL CHECK(length(message) < 8192),
-    poster_name TEXT NOT NULL CHECK(length(poster_name) < 40),
+    user_name TEXT NOT NULL CHECK(length(user_name) < 40),
     file TEXT,
     sage BOOLEAN NOT NULL DEFAULT false,
     creation_date TIMESTAMP NOT NULL DEFAULT now()
 );
 
 
-CREATE OR REPLACE FUNCTION set_post_id()
+CREATE OR REPLACE FUNCTION set_comment_id()
   RETURNS TRIGGER AS
   $$
   BEGIN
-    SELECT count(1) INTO new.post_id
-    FROM posts
+    SELECT count(1) INTO new.comment_id
+    FROM comments
     WHERE thread_id = NEW.thread_id;
   RETURN NEW;
   END;
@@ -48,31 +53,31 @@ CREATE OR REPLACE FUNCTION set_post_id()
 LANGUAGE plpgsql;
 
 
-CREATE OR REPLACE TRIGGER "set_post_id"
-  BEFORE INSERT ON posts
+CREATE OR REPLACE TRIGGER "set_comment_id"
+  BEFORE INSERT ON comments
   FOR EACH ROW
-    EXECUTE PROCEDURE "set_post_id"();
+    EXECUTE PROCEDURE "set_comment_id"();
 
 
-CREATE OR REPLACE FUNCTION set_new_post_number()
+CREATE OR REPLACE FUNCTION set_new_comment_number()
 RETURNS trigger AS
 $$
-DECLARE last_post_number INT; 
+DECLARE last_comment_number INT; 
 BEGIN
-  SELECT p.post_number INTO last_post_number
-  FROM posts AS p 
-  JOIN threads AS t ON t.id = p.thread_id
+  SELECT c.comment_number INTO last_comment_number
+  FROM comments AS c 
+  JOIN threads AS t ON t.id = c.thread_id
     WHERE t.board_id = (
       SELECT board_id
       FROM threads
       WHERE id = NEW.thread_id)
-  ORDER BY p.post_number DESC
+  ORDER BY c.comment_number DESC
   LIMIT 1;
 
   IF NOT FOUND THEN
-    NEW.post_number = 0;
+    NEW.comment_number = 0;
   ELSE
-    NEW.post_number = last_post_number + 1;
+    NEW.comment_number = last_comment_number + 1;
   END IF;
 RETURN NEW;
 END;
@@ -80,20 +85,20 @@ $$
 LANGUAGE plpgsql;
 
 
-CREATE TRIGGER "update_post_number_on_insert"
-  BEFORE INSERT ON posts
+CREATE TRIGGER "update_comment_number_on_insert"
+  BEFORE INSERT ON comments
   FOR EACH ROW
-  EXECUTE PROCEDURE "set_new_post_number"();
+  EXECUTE PROCEDURE "set_new_comment_number"();
 
 
 CREATE OR REPLACE FUNCTION bump_limit(thread_qid INT)
 RETURNS BOOLEAN AS
 $$
-DECLARE number_of_posts INT;
+DECLARE number_of_comments INT;
 DECLARE board_bumplimit INT;
 BEGIN
-  SELECT count(1) INTO number_of_posts 
-  FROM posts 
+  SELECT count(1) INTO number_of_comments 
+  FROM comments 
   WHERE thread_id = thread_qid;
 
   SELECT bumplimit INTO board_bumplimit 
@@ -101,7 +106,7 @@ BEGIN
     WHERE id = (
       SELECT board_id FROM threads
       WHERE id = thread_qid);
-  IF number_of_posts >= board_bumplimit THEN
+  IF number_of_comments >= board_bumplimit THEN
     RETURN true;
   ELSE
     RETURN false;
@@ -127,6 +132,6 @@ LANGUAGE plpgsql;
 
 
 CREATE TRIGGER update_bump_date
-  AFTER INSERT ON posts
+  AFTER INSERT ON comments
   FOR EACH ROW
   EXECUTE PROCEDURE update_bump_date();

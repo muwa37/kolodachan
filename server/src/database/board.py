@@ -1,30 +1,29 @@
+from fastapi import HTTPException
 from psycopg import sql
 from psycopg.rows import dict_row
 
 from .util import Database
 
 
-class Board:
-
-    def __init__(self):
-        self.db = Database()
+class Board(Database):
 
     def create(self, tag: str, title: str, description: str):
         query = '''
             INSERT INTO boards (tag, title, description)
             VALUES(%s, %s, %s)
         '''
-        self.db.execute('create', query, (tag, title, description))
+        self.execute('create', query, (tag, title, description))
 
     def get_all(self):
         query = '''
             SELECT
                 tag,
-                title
+                title,
+                description
             FROM boards
             WHERE enabled = true
         '''
-        result = self.db.execute('read', query, row_factory=dict_row)
+        result = self.execute('read', query, row_factory=dict_row)
         return result
 
     def get_one(self, tag: str):
@@ -34,21 +33,24 @@ class Board:
                 tag,
                 title,
                 description,
-                default_nickname,
-                allow_change_nickname,
+                default_name,
+                name_change_allowed,
                 bumplimit,
                 max_message_length,
+                max_file_size,
                 enabled
             FROM boards
             WHERE tag = %s AND enabled = true;
         '''
-        result = self.db.execute('read', query, (tag, ), dict_row)
-
-        if result['enabled']:
-            return result
+        result = self.execute('read', query, (tag, ), dict_row)
+        if not result:
+            raise HTTPException(status_code=404,
+                                detail=('Board does not exits'))
+        if result[0]['enabled']:
+            return result[0]
 
     def update(self, tag: str, data):
-        conn = self.db.create_connection()
+        conn = self.create_connection()
         with conn.cursor() as cur:
             for column, value in data.items():
                 cur.execute(

@@ -1,1 +1,1 @@
-from .post import Post
+from .models import Comment, Thread

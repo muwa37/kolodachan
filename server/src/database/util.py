@@ -52,6 +52,4 @@ class Database:
                 conn.commit()
             if 'read' in method:
                 result = cur.fetchall()
-                if len(result) == 1:
-                    result = result[0]
         return result

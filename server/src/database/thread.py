@@ -1,10 +1,9 @@
+from fastapi import HTTPException
+
 from .util import Database
 
 
-class Thread:
-
-    def __init__(self):
-        self.db = Database()
+class Thread(Database):
 
     def create(self, board_id: int) -> int:
         query = '''
@@ -12,22 +11,26 @@ class Thread:
             VALUES(%s)
             RETURNING id
         '''
-        thread_id = self.db.execute('create and read', query, (board_id, ))
+        thread_id = self.execute('create and read', query, (board_id, ))[0]
 
         return thread_id[0]
 
     def get(self, board_id, post_number) -> int:
         query = '''
-            SELECT p.thread_id
-            FROM posts as p
+            SELECT c.thread_id
+            FROM comments as c
             JOIN threads as t
-            ON p.thread_id = t.id
-            WHERE t.board_id = %s AND p.post_number = %s
-            ORDER BY p.creation_date ASC
-            LIMIT 1
+            ON c.thread_id = t.id
+            WHERE t.board_id = %s
+                AND c.comment_number = %s
+                AND c.comment_id = 0
+            ORDER BY c.creation_date ASC
         '''
-        result = self.db.execute('read', query, (board_id, post_number))
-        return result
+        result = self.execute('read', query, (board_id, post_number))
+        if not result:
+            raise HTTPException(status_code=404,
+                                detail='Thread does not exitst')
+        return result[0][0]
 
     def get_multiple(self, board_id, limit, step) -> list:
         query = '''
@@ -38,6 +41,6 @@ class Thread:
             LIMIT %s
             OFFSET %s
         '''
-        result = self.db.execute('read', query, (board_id, limit, step))
+        result = self.execute('read', query, (board_id, limit, step))
         result = list([id[0] for id in result])
         return result
