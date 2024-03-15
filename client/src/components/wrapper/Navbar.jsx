@@ -8,7 +8,9 @@ const Navbar = () => {
         <Link to='/'>kolodaChan</Link>
         <nav className='w-1/4 flex items-center justify-evenly'>
           <Link to='/boards'>boards</Link>
+          <Link to='/threads'>threads</Link>
           <Link to='/about'>about</Link>
+          <Link to='/rules'>rules</Link>
         </nav>
       </nav>
     </header>
