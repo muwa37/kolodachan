@@ -19,7 +19,12 @@ class Board(Database):
             SELECT
                 tag,
                 title,
-                description
+                description,
+                default_name,
+                name_change_allowed,
+                bumplimit,
+                max_message_length,
+                max_file_size
             FROM boards
             WHERE enabled = true
         '''

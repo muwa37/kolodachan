@@ -1,1 +1,1 @@
-from .models import Comment, Thread, Threads
+from .models import Boards, Comment, Thread, Threads

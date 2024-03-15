@@ -4,6 +4,21 @@ from typing import List
 from pydantic import BaseModel, RootModel
 
 
+class Board(BaseModel):
+    tag: str
+    title: str
+    description: str
+    default_name: str
+    name_change_allowed: bool
+    bumplimit: int
+    max_message_length: int
+    max_file_size: int
+
+
+class Boards(RootModel):
+    root: List[Board]
+
+
 class Comment(BaseModel):
     comment_id: int
     comment_number: int

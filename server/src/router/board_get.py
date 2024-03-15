@@ -1,20 +1,29 @@
 from database import Database
-from fastapi import APIRouter, Response
-from models import Comment, Threads
+from fastapi import APIRouter, HTTPException, Response
+from models import Boards, Comment, Threads
 
 router = APIRouter(prefix='/boards', tags=['board'])
 db = Database()
 
 
-@router.get('/')
-def get_boards():
-    '''Retrive all avalible boards'''
-    return db.board.get_all()
+@router.get('/', response_model=Boards)
+def get_boards(tag: str | None = None):
+    '''retrieve all avalible boards
+    - **tag** board tag if you want to retrieve one specific board
+        **optional query parameter*
+    '''
+
+    boards = db.board.get_all()
+    if tag:
+        boards = [board for board in boards if board['tag'] == tag]
+    if not boards:
+        raise HTTPException(status_code=404, detail='Not found')
+    return boards
 
 
 @router.get('/{tag}')
 def get_board(tag: str):
-    '''Retrive one board'''
+    '''retrieve one board'''
     return db.board.get_one(tag)
 
 
@@ -24,16 +33,16 @@ def get_treads(tag,
                threads_limit: int = 10,
                threads_step: int = 0,
                comments_offset: int = -3):
-    '''Retrive threads with comments from one board
+    '''retrieve threads with comments from one board
         - **tag**: board tag **mandatory path parameter*
         - **threads_limit**: max number of threads **optional query parameter*
         - **threads_step**: number of thread to skip
         **optional query parameter*
-        - **comment_offset**: number of comments to retrive for each thread
+        - **comment_offset**: number of comments to retrieve for each thread
         **optional query parameter*
-            - -3 retrive only last 3 comments
-            - +3 retrive only first 3 comments
-            - 0 retrive all comments
+            - -3 retrieve only last 3 comments
+            - +3 retrieve only first 3 comments
+            - 0 retrieve all comments
     '''
 
     board = db.board.get_one(tag)
@@ -52,13 +61,13 @@ def get_thread(tag: str,
                response: Response,
                comments_offset: int = 0,
                comments_limit: int | None = None):
-    """Retrive single thread with comments
+    """retrieve single thread with comments
     - **tag** board tag **mandatory path parameter*
     - **thread_number** thread number or number of first post in thread
         **mandatory path parameter*
     - **comments_offset** number of comments to skip
         **optional query parameter*
-    - **comments_limit** number of comments to retrive
+    - **comments_limit** number of comments to retrieve
         **optional query parameter*
     """
     board = db.board.get_one(tag)
