@@ -34,7 +34,9 @@ CREATE TABLE comments (
     title TEXT NOT NULL CHECK(length(title) < 200),
     message TEXT NOT NULL CHECK(length(message) < 8192),
     user_name TEXT NOT NULL CHECK(length(user_name) < 40),
-    file TEXT,
+    file_link TEXT,
+    file_link_commpressed TEXT,
+    original_filename TEXT,
     sage BOOLEAN NOT NULL DEFAULT false,
     creation_date TIMESTAMP NOT NULL DEFAULT now()
 );

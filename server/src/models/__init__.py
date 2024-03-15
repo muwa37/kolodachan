@@ -1,1 +1,1 @@
-from .models import Comment, Thread
+from .models import Comment, Thread, Threads
