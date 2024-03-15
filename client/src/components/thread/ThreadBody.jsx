@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ThreadBody = () => {
+export const ThreadBody = () => {
   return (
     <div>
       <div>thread navigation</div>
@@ -10,5 +10,3 @@ const ThreadBody = () => {
     </div>
   );
 };
-
-export default ThreadBody;

@@ -9,6 +9,7 @@ export const Navbar = () => {
         <NavLink
           to='/'
           className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+          end
         >
           <div className='flex h-full items-center justify-center'>
             <div className='flex justify-center items-center w-1/2 h-full'>
@@ -25,6 +26,7 @@ export const Navbar = () => {
           <NavLink
             to='/boards'
             className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+            end
           >
             boards
           </NavLink>

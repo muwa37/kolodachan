@@ -1,14 +1,14 @@
 import React from 'react';
 
-const BoardHeader = () => {
+export const BoardHeader = ({ title, description, img, info }) => {
   return (
     <div>
-      <div>board logo</div>
-      <div>board title</div>
-      <div>board pinned info</div>
-      <div>board post form</div>
+      <div>
+        <img src={img} alt={title + '-logo'} />
+      </div>
+      <div>{title}</div>
+      <div>{description}</div>
+      <div>info: {info}</div>
     </div>
   );
 };
-
-export default BoardHeader;

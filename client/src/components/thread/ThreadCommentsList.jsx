@@ -1,7 +1,7 @@
 import React from 'react';
-import ThreadComment from './ThreadComment';
+import { ThreadComment } from './ThreadComment';
 
-const ThreadCommentsList = () => {
+export const ThreadCommentsList = () => {
   return (
     <div>
       thread replays:
@@ -11,5 +11,3 @@ const ThreadCommentsList = () => {
     </div>
   );
 };
-
-export default ThreadCommentsList;

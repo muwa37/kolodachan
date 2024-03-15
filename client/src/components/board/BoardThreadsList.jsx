@@ -1,6 +1,9 @@
 import React from 'react';
+import { getThreadByBoard } from '../../API/threads';
 
-const BoardThreadsList = () => {
+export const BoardThreadsList = ({ boardId }) => {
+  const threads = getThreadByBoard(boardId);
+
   return (
     <div>
       <div>
@@ -9,9 +12,15 @@ const BoardThreadsList = () => {
         <div>sort</div>
         <div>switch view</div>
       </div>
-      <div>list of threads</div>
+      <div>
+        threads list
+        {threads.map(thread => (
+          <div key={thread.id}>
+            <h1>{thread.title}</h1>
+            <p>{thread.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
-
-export default BoardThreadsList;

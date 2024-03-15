@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ThreadComment = () => {
+export const ThreadComment = () => {
   return (
     <div>
       <div>thread replay sample:</div>
@@ -10,5 +10,3 @@ const ThreadComment = () => {
     </div>
   );
 };
-
-export default ThreadComment;

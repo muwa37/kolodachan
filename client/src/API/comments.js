@@ -1,44 +1,44 @@
-export function getComments(threadID) {
+export function getCommentsByThread(threadID) {
   const comments = [
     {
-      id: 1,
+      id: '1',
       text: 'a 1st thread 1st replay sample text',
-      thread: 1,
+      thread: '1',
     },
     {
-      id: 2,
+      id: '2',
       title: 'a 2nd thread 1st replay sample text',
-      thread: 2,
+      thread: '2',
     },
     {
-      id: 3,
+      id: '3',
       title: 'b 1st thread 1st replay sample text',
-      thread: 3,
+      thread: '3',
     },
     {
-      id: 4,
+      id: '4',
       title: 'b 2nd thread 1st replay sample text',
-      thread: 4,
+      thread: '4',
     },
     {
-      id: 5,
+      id: '5',
       text: 'a 1st thread 2nd replay sample text',
-      thread: 1,
+      thread: '1',
     },
     {
-      id: 6,
+      id: '6',
       title: 'a 2nd thread 2nd replay sample text',
-      thread: 2,
+      thread: '2',
     },
     {
-      id: 7,
+      id: '7',
       title: 'b 1st thread 2nd replay sample text',
-      thread: 3,
+      thread: '3',
     },
     {
-      id: 8,
+      id: '8',
       title: 'b 2nd thread 2nd replay sample text',
-      thread: 4,
+      thread: '4',
     },
   ];
 

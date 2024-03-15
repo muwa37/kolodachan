@@ -1,3 +1,5 @@
+import { getOneBoard } from './boards';
+
 export function getThreads() {
   const threads = [
     {
@@ -62,4 +64,10 @@ export function getThreads() {
 export function getOneThread(id) {
   const threads = getThreads();
   return threads.find(thread => thread.id === id);
+}
+
+export function getThreadByBoard(boardId) {
+  const title = getOneBoard(boardId).title;
+  const threads = getThreads();
+  return threads.filter(thread => thread.board === title);
 }
