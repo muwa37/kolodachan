@@ -1,12 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import kolodaNavLogo from '../../assets/images/static/koloda-nav-icon.png';
 
 export const Navbar = () => {
   return (
     <header className='flex items-center'>
       <nav className='w-full h-full flex space-x-6 items-center justify-between'>
-        <Link to='/'>
+        <NavLink
+          to='/'
+          className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+        >
           <div className='flex h-full items-center justify-center'>
             <div className='flex justify-center items-center w-1/2 h-full'>
               <img
@@ -17,12 +20,32 @@ export const Navbar = () => {
             </div>
             <h4 className='text-xl font-semibold'>kolodaChan</h4>
           </div>
-        </Link>
+        </NavLink>
         <nav className='w-1/4 flex items-center justify-evenly'>
-          <Link to='/boards'>boards</Link>
-          <Link to='/threads'>threads</Link>
-          <Link to='/about'>about</Link>
-          <Link to='/rules'>rules</Link>
+          <NavLink
+            to='/boards'
+            className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+          >
+            boards
+          </NavLink>
+          <NavLink
+            to='/threads'
+            className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+          >
+            threads
+          </NavLink>
+          <NavLink
+            to='/about'
+            className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+          >
+            about
+          </NavLink>
+          <NavLink
+            to='/rules'
+            className={({ isActive }) => (isActive ? 'text-sky-600' : '')}
+          >
+            rules
+          </NavLink>
         </nav>
       </nav>
     </header>

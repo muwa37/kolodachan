@@ -3,6 +3,7 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
+import { UnexpectedError } from '../components/common/UnexpectedError';
 import { Main } from '../layouts/Main';
 import { Error } from '../pages/Error';
 import { Home } from '../pages/Home';
@@ -18,7 +19,7 @@ export const AppRouter = createBrowserRouter(
           path={route.path}
           element={route.element}
           key={route.path}
-          errorElement={<Error />}
+          errorElement={<UnexpectedError />}
         />
       ))}
     </Route>

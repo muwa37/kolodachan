@@ -10,6 +10,7 @@ export const CardList = ({ cards }) => {
           title={card.title}
           description={card.description}
           image={card.image}
+          id={card.id}
         />
       ))}
     </div>
