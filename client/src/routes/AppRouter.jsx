@@ -1,33 +1,26 @@
 import {
-    createRoutesFromElements,
-    createBrowserRouter,
-    Route,
-  } from "react-router-dom";
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+} from 'react-router-dom';
+import { Main } from '../layouts/Main';
+import { Error } from '../pages/Error';
+import { Home } from '../pages/Home';
 import routes from './routes';
-import Root from './Root'
-import ErrorPage from '../pages/ErrorPage';
-import HomePage from '../pages/HomePage';
 
-export const AppRouter = createBrowserRouter (createRoutesFromElements (
+export const AppRouter = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<Main />} errorElement={<Error />}>
+      <Route index element={<Home />} />
+      <Route errorElement={<Error />} />
+      {routes.map(route => (
         <Route
-            path='/'
-            element={<Root/>}
-            errorElement={<ErrorPage/>}
-        >
-            <Route 
-                index 
-                element={<HomePage/>} 
-            />
-            <Route
-                errorElement={<ErrorPage/>}
-            />
-            {routes.map( route => 
-                <Route
-                    path={route.path}
-                    element={route.element}
-                    key={route.path}
-                    errorElement={<ErrorPage/>}
-                />
-            )}
-        </Route>
-));
+          path={route.path}
+          element={route.element}
+          key={route.path}
+          errorElement={<Error />}
+        />
+      ))}
+    </Route>
+  )
+);
