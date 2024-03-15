@@ -5,9 +5,9 @@ export const Home = () => {
   return (
     <section className='flex w-full h-full items-center justify-evenly'>
       <div className='h-5/6 flex flex-col justify-evenly items-center'>
-        <h1 className='text-6xl'>kolodaChan</h1>
+        <h1 className='text-6xl font-extrabold'>kolodaChan</h1>
         <div>
-          <h2 className='text-2xl'>welcome, nya^^</h2>
+          <h2 className='text-2xl font-semibold'>welcome, nya^^</h2>
           <p>kolodaChan - borda dlya kavainih lydey</p>
         </div>
       </div>

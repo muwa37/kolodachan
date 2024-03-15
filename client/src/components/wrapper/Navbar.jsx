@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import kolodaNavLogo from '../../assets/images/static/koloda-nav-icon.png';
 
-const Navbar = () => {
+export const Navbar = () => {
   return (
     <header className='flex items-center'>
       <nav className='w-full h-full flex space-x-6 items-center justify-between'>
@@ -15,7 +15,7 @@ const Navbar = () => {
                 alt='koloda-nav-logo'
               />
             </div>
-            <h1>kolodaChan</h1>
+            <h4 className='text-xl font-semibold'>kolodaChan</h4>
           </div>
         </Link>
         <nav className='w-1/4 flex items-center justify-evenly'>
@@ -28,5 +28,3 @@ const Navbar = () => {
     </header>
   );
 };
-
-export default Navbar;

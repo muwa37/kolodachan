@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <div className='w-full flex space-x-6 items-center justify-center '>
       <span>Copyleft &#9786; 2k24</span>
@@ -12,5 +12,3 @@ const Footer = () => {
     </div>
   );
 };
-
-export default Footer;
