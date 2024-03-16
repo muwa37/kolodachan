@@ -1,24 +1,15 @@
 import React from 'react';
-import { getThreadByBoard } from '../../API/threads';
+import { getThreadsByBoard } from '../../API/threads';
+import { ThreadInBoard } from '../thread/ ThreadInBoard';
 
 export const BoardThreadsList = ({ boardId }) => {
-  const threads = getThreadByBoard(boardId);
+  const threads = getThreadsByBoard(boardId);
 
   return (
-    <div>
+    <div className='h-full p-2 w-full'>
       <div>
-        board navigation:
-        <div>search</div>
-        <div>sort</div>
-        <div>switch view</div>
-      </div>
-      <div>
-        threads list
         {threads.map(thread => (
-          <div key={thread.id}>
-            <h1>{thread.title}</h1>
-            <p>{thread.description}</p>
-          </div>
+          <ThreadInBoard key={thread.id} id={thread.id} />
         ))}
       </div>
     </div>

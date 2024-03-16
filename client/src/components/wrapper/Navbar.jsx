@@ -4,7 +4,7 @@ import kolodaNavLogo from '../../assets/images/static/koloda-nav-icon.png';
 
 export const Navbar = () => {
   return (
-    <header className='flex items-center'>
+    <header className='p-2 flex items-center'>
       <nav className='w-full h-full flex space-x-6 items-center justify-between'>
         <NavLink
           to='/'

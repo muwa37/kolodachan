@@ -5,9 +5,11 @@ import { Navbar } from '../components/wrapper/Navbar';
 
 export const Main = () => {
   return (
-    <div className='container mx-0 py-4 px-2 h-screen flex flex-col justify-between text-teal-800 bg-slate-400'>
+    <div className='container h-screen flex flex-col justify-between text-teal-800 bg-slate-200'>
       <Navbar />
-      <Outlet />
+      <div className='overflow-auto py-2 h-[90%] border-y-2 border-teal-800'>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
