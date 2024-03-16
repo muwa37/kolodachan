@@ -10,7 +10,7 @@ export const About = () => {
       <h1 className='text-6xl font-extrabold'>about kolodaChan</h1>
       <div className='h-full w-full flex flex-col items-start justify-start'>
         {about.map(item => (
-          <InfoBlock title={item.title} info={item.info} />
+          <InfoBlock key={item.id} title={item.title} info={item.info} />
         ))}
       </div>
     </section>

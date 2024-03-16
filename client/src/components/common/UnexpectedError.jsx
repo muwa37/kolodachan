@@ -3,6 +3,7 @@ import kolodaErrorImg from '../../assets/images/static/koloda-error.png';
 
 export const UnexpectedError = () => {
   const error = useRouteError();
+  console.log(error);
 
   return (
     <div className='container mx-0 py-4 px-2 h-screen flex flex-col justify-between text-teal-800 bg-slate-400'>

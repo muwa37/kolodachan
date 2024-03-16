@@ -6,10 +6,12 @@ const rules = {
 const about = [
   {
     title: 'kuda ya popal',
+    id: '1',
     info: ['koloda eto chan', 'zdes obitajut nyashki'],
   },
   {
     title: 'kak moderiruetsya chan',
+    id: '2',
     info: ['administracia reashaet kto nyashka v sootvetstvii s pravilami'],
   },
 ];
