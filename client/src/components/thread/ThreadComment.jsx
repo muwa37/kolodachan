@@ -5,7 +5,7 @@ import { ReplyButton } from '../common/ReplyButton';
 export const ThreadComment = () => {
   return (
     <div className='mt-2 w-full bg-slate-400 p-1 rounded-md'>
-      <div className='flex'>
+      <div className='flex items-center justify-start'>
         <ReplyButton />
         <PostData />
       </div>

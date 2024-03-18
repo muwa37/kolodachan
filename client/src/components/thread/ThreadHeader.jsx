@@ -5,7 +5,7 @@ import { ThreadMenu } from './ThreadMenu';
 
 export const ThreadHeader = () => {
   return (
-    <div className='flex'>
+    <div className='flex items-center justify-center'>
       <ReplyButton />
       <ThreadMenu />
       <PostData />
