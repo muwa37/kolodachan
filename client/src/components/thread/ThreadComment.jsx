@@ -1,18 +1,17 @@
 import React from 'react';
+import { AttachmentsBlock } from '../common/AttachmentsBlock';
 import { PostData } from '../common/PostData';
 import { ReplyButton } from '../common/ReplyButton';
 
-export const ThreadComment = () => {
+export const ThreadComment = ({ text, attachments, data }) => {
   return (
     <div className='mt-2 w-full bg-slate-400 p-1 rounded-md'>
       <div className='flex items-center justify-start'>
         <ReplyButton />
-        <PostData />
+        <PostData data={data} />
       </div>
-      <div className='flex items-start justify-start'>
-        <div className='p-2'>comment attachments</div>
-        <div>comment text</div>
-      </div>
+      <AttachmentsBlock attachments={attachments} />
+      <div>{text}t</div>
     </div>
   );
 };

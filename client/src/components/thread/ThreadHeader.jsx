@@ -3,12 +3,12 @@ import { PostData } from '../common/PostData';
 import { ReplyButton } from '../common/ReplyButton';
 import { ThreadMenu } from './ThreadMenu';
 
-export const ThreadHeader = () => {
+export const ThreadHeader = ({ data }) => {
   return (
     <div className='flex items-center justify-center'>
       <ReplyButton />
       <ThreadMenu />
-      <PostData />
+      <PostData data={data} />
     </div>
   );
 };

@@ -11,6 +11,7 @@ export function getThreads() {
         { link: 'url/1337', name: 'sample img name' },
         { link: 'url/322', name: 'sample img name 2' },
       ],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '1',
@@ -18,6 +19,7 @@ export function getThreads() {
       board: 'a',
       text: 'sample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread description',
       attachments: [{ link: 'url/322', name: 'sample img name 2' }],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '2',
@@ -25,6 +27,7 @@ export function getThreads() {
       board: 'b',
       text: 'sample thread description',
       attachments: [],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '3',
@@ -32,6 +35,7 @@ export function getThreads() {
       board: 'b',
       text: 'sample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread description',
       attachments: [{ link: 'url/1337', name: 'sample img name' }],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '4',
@@ -39,6 +43,7 @@ export function getThreads() {
       board: 'a',
       text: 'sample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread description',
       attachments: [],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '5',
@@ -49,6 +54,7 @@ export function getThreads() {
         { link: 'url/1337', name: 'sample img name' },
         { link: 'url/322', name: 'sample img name 2' },
       ],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '6',
@@ -59,6 +65,7 @@ export function getThreads() {
         { link: 'url/1337', name: 'sample img name' },
         { link: 'url/322', name: 'sample img name 2' },
       ],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '7',
@@ -66,6 +73,7 @@ export function getThreads() {
       board: 'mus',
       text: 'sample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread description',
       attachments: [{ link: 'url/1337', name: 'sample img name' }],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
     {
       id: '8',
@@ -73,6 +81,7 @@ export function getThreads() {
       board: 'mus',
       text: 'sample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread descriptionsample thread description',
       attachments: [{ link: 'url/322', name: 'sample img name 2' }],
+      data: { username: 'dasd', time: new Date().toString(), number: '1337' },
     },
   ];
 
