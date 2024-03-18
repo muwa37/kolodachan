@@ -1,6 +1,6 @@
 import React from 'react';
 
-import hideIcon from '../../assets/images/icons/hide.svg';
+import favoriteIcon from '../../assets/images/icons/favorite.svg';
 import reportIcon from '../../assets/images/icons/report.svg';
 
 export const ThreadMenu = () => {
@@ -10,7 +10,7 @@ export const ThreadMenu = () => {
         <img src={reportIcon} alt='report' />
       </button>
       <button className='size-4 m-2'>
-        <img src={hideIcon} alt='hide' />
+        <img src={favoriteIcon} alt='add to favorite' />
       </button>
     </div>
   );

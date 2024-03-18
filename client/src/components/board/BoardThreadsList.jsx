@@ -1,5 +1,6 @@
 import React from 'react';
 import { getThreadsByBoard } from '../../API/threads';
+import { PostForm } from '../common/PostForm';
 import { ThreadInBoard } from '../thread/ ThreadInBoard';
 
 export const BoardThreadsList = ({ boardId }) => {
@@ -12,6 +13,8 @@ export const BoardThreadsList = ({ boardId }) => {
           <ThreadInBoard key={thread.id} id={thread.id} />
         ))}
       </div>
+
+      <PostForm parentId={boardId} />
     </div>
   );
 };

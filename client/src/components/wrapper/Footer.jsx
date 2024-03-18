@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Footer = () => {
   return (
-    <div className='p-2 w-full flex space-x-6 items-center justify-center '>
+    <div className='p-2 w-full flex space-x-6 items-center justify-center text-sm'>
       <span>Copyleft &#9786; 2k24</span>
       <p>
         <a

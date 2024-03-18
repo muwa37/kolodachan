@@ -16,7 +16,7 @@ export const AttachmentsBlock = ({ attachments }) => {
               <img src={downloadIcon} alt='download' />
             </button>
           </div>
-          <img src={item.link} />
+          <img src={item.link} alt='related' />
         </div>
       ))}
     </div>

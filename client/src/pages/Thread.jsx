@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { getOneBoard } from '../API/boards';
 import { getCommentsByThread } from '../API/comments';
@@ -11,22 +11,33 @@ import { ThreadHeader } from '../components/thread/ThreadHeader';
 
 export const Thread = () => {
   const { threadId, boardId } = useParams();
-  const thread = getOneThread(threadId);
-  const { title, description, info, img } = getOneBoard(boardId);
+  const { data, id, title, text, attachments } = getOneThread(threadId);
+  const { title: boardTitle, description, info, img } = getOneBoard(boardId);
   const comments = getCommentsByThread(threadId);
 
   return (
     <div>
       <BoardHeader
-        title={title}
+        title={boardTitle}
         description={description}
         info={info}
         img={img}
       />
-      <PostForm parentId={thread.id} />
-      <ThreadHeader />
-      <ThreadBody />
-      <ThreadCommentsList comments={comments} />
+      <PostForm parentId={id} />
+      <div className='flex flex-col items-start justify-center bg-slate-300 mt-2 px-2 py-1 w-[1270px] rounded-md'>
+        <div className='flex justify-center items-center'>
+          <Link
+            to={'/boards/' + boardTitle}
+            className='border-2 border-teal-800 rounded-md p-1'
+          >
+            back to board
+          </Link>
+          <ThreadHeader data={data} id={id} />
+        </div>
+        <ThreadBody title={title} text={text} attachments={attachments} />
+        <ThreadCommentsList comments={comments} />
+      </div>
+      <PostForm parentId={id} />
     </div>
   );
 };
