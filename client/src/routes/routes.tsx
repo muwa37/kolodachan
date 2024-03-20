@@ -30,7 +30,6 @@ export const AppRoutes = () => {
   return (
     <Route path='/' element={<Main />} errorElement={<Error />}>
       <Route index element={<Home />} />
-      <Route errorElement={<Error />} />
       {routes.map(route => (
         <Route
           path={route.path}

@@ -1,4 +1,3 @@
-import React from 'react';
 import kolodaHomeImg from '../assets/images/static/koloda-home.png';
 
 export const Home = () => {

@@ -1,19 +1,17 @@
 import { useRouteError } from 'react-router-dom';
-import kolodaErrorImg from '../assets/images/static/koloda-error.png';
-import { Footer } from '../components/wrapper/Footer';
-import { Navbar } from '../components/wrapper/Navbar';
+import kolodaErrorImg from '../../assets/images/static/koloda-error.png';
 
-export const Error = () => {
+export const UnexpectedError = () => {
   const error = useRouteError();
+  console.log(error);
 
   return (
-    <div className='mx-0 py-4 px-2 h-screen w-full flex flex-col justify-between text-teal-800 bg-slate-400'>
-      <Navbar />
+    <div className='mx-0 py-4 px-2 h-full w-full flex flex-col justify-between text-teal-800 bg-slate-200'>
       <section className='flex w-full h-full items-center justify-evenly'>
         <div className='h-2/3 flex flex-col justify-evenly items-center'>
           <h1 className='text-6xl font-extrabold'>Error</h1>
           <h2 className='text-2xl font-semibold text-center'>
-            {error.message || error.data}
+            something went wrong
           </h2>
         </div>
         <div className='flex justify-center items-center w-1/2 h-full'>
@@ -24,7 +22,6 @@ export const Error = () => {
           />
         </div>
       </section>
-      <Footer />
     </div>
   );
 };
