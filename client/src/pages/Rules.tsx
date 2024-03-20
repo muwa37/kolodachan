@@ -1,4 +1,3 @@
-import React from 'react';
 import { getRules } from '../API/info';
 import { InfoBlock } from '../components/common/InfoBlock';
 

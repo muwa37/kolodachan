@@ -71,11 +71,11 @@ const comments = [
 
 const offset = 3;
 
-export function getCommentsByThread(threadId) {
+export function getCommentsByThread(threadId: string) {
   return comments.filter(comment => comment.thread === threadId);
 }
 
-export function getOffsetCommentsOfThread(threadId) {
+export function getOffsetCommentsOfThread(threadId: string) {
   return comments
     .filter(comment => comment.thread === threadId)
     .slice(0, offset - 1);

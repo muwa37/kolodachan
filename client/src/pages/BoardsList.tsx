@@ -1,4 +1,3 @@
-import React from 'react';
 import { getBoards } from '../API/boards';
 import { CardList } from '../components/common/CardList';
 
