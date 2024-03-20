@@ -1,11 +1,18 @@
+import { Route } from 'react-router-dom';
+import { UnexpectedError } from '../components/common/UnexpectedError';
+import { Main } from '../layouts/Main';
 import { About } from '../pages/About';
 import { Board } from '../pages/Board';
 import { BoardsList } from '../pages/BoardsList';
+import { Error } from '../pages/Error';
+import { Home } from '../pages/Home';
 import { Rules } from '../pages/Rules';
 import { Thread } from '../pages/Thread';
 import { ThreadsList } from '../pages/ThreadsList';
 
-const routes = [
+//TODO: refactor router
+
+export const routes = [
   { path: '/about', element: <About /> },
   { path: '/rules', element: <Rules /> },
   { path: '/boards', element: <BoardsList /> },
@@ -19,4 +26,19 @@ const routes = [
   { path: '/threads', loader: '', element: <ThreadsList /> },
 ];
 
-export default routes;
+export const AppRoutes = () => {
+  return (
+    <Route path='/' element={<Main />} errorElement={<Error />}>
+      <Route index element={<Home />} />
+      <Route errorElement={<Error />} />
+      {routes.map(route => (
+        <Route
+          path={route.path}
+          element={route.element}
+          key={route.path}
+          errorElement={<UnexpectedError />}
+        />
+      ))}
+    </Route>
+  );
+};

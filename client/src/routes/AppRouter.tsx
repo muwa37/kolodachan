@@ -7,7 +7,7 @@ import { UnexpectedError } from '../components/common/UnexpectedError';
 import { Main } from '../layouts/Main';
 import { Error } from '../pages/Error';
 import { Home } from '../pages/Home';
-import routes from './routes';
+import { routes } from './routes';
 
 export const AppRouter = createBrowserRouter(
   createRoutesFromElements(

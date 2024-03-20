@@ -7,7 +7,7 @@ export const Error = () => {
   const error = useRouteError();
 
   return (
-    <div className='mx-0 py-4 px-2 h-screen flex flex-col justify-between text-teal-800 bg-slate-400'>
+    <div className='mx-0 py-4 px-2 h-screen w-full flex flex-col justify-between text-teal-800 bg-slate-400'>
       <Navbar />
       <section className='flex w-full h-full items-center justify-evenly'>
         <div className='h-2/3 flex flex-col justify-evenly items-center'>
