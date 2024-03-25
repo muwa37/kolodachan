@@ -11,9 +11,7 @@ import { ThreadHeader } from '../components/thread/ThreadHeader';
 
 export const Thread = () => {
   const { threadId, boardId } = useParams();
-  if (threadId) {
-    const { data, id, title, text, attachments } = getOneThread(threadId);
-  }
+  const { data, id, title, text, attachments } = getOneThread(threadId);
   const { title: boardTitle, description, info, img } = getOneBoard(boardId);
   const comments = getCommentsByThread(threadId);
 

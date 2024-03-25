@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { getOneBoard } from '../API/boards.js';
+import { getOneBoard } from '../API/boards';
 import { BoardHeader } from '../components/board/BoardHeader';
-import { BoardNav } from '../components/board/BoardNav.js';
+import { BoardNav } from '../components/board/BoardNav';
 import { BoardThreadsList } from '../components/board/BoardThreadsList.jsx';
 import { PostForm } from '../components/common/PostForm.jsx';
 
