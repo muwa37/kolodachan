@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from './Card';
 
 export const CardList = ({ cards }) => {
@@ -8,7 +7,7 @@ export const CardList = ({ cards }) => {
         <Card
           key={card.id}
           title={card.title}
-          description={card.description}
+          description={card.description || card.text}
           image={card.image}
           id={card.id}
         />

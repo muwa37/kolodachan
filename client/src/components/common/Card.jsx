@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Card = ({ title, description, image, id }) => {
@@ -10,11 +9,11 @@ export const Card = ({ title, description, image, id }) => {
         <div className='w-1/2'>
           <img className='p-2' src={image} alt={title + '-logo'} />
         </div>
-        <div className='w-1/2 -p2 flex flex-col items-center justify-between'>
+        <div className='w-1/2 p-2 flex flex-col items-center justify-between'>
           <h2 className='underline underline-offset-2 font-semibold'>
             {title}
           </h2>
-          <p className='text-center'>{description}</p>
+          <p className='text-center'>{description.slice(0, 100)}</p>
         </div>
       </div>
     </Link>

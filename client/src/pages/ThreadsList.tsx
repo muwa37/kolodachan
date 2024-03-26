@@ -1,4 +1,3 @@
-import React from 'react';
 import { getThreads } from '../API/threads';
 import { CardList } from '../components/common/CardList';
 
