@@ -2,9 +2,9 @@ import { getOneBoard } from '@/API/boards';
 import { getThreadsByBoard } from '@/API/threads';
 import { BoardHeader } from '@/components/board/BoardHeader';
 import { BoardNav } from '@/components/board/BoardNav';
-import { BoardThreadsList } from '@/components/board/BoardThreadsList.jsx';
+import { BoardThreadsList } from '@/components/board/BoardThreadsList';
 import { CardList } from '@/components/common/CardList';
-import { PostForm } from '@/components/common/PostForm.jsx';
+import { PostForm } from '@/components/common/PostForm';
 
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';

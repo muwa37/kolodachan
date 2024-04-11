@@ -52,7 +52,12 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     ],
   };
 
+  const postCssLoader = {
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader', 'postcss-loader'],
+  };
+
   const babelLoader = buildBabelLoader(options);
 
-  return [svgrLoader, assetsLoader, scssLoader /* tsLoader*/, babelLoader];
+  return [svgrLoader, assetsLoader, scssLoader, postCssLoader, babelLoader];
 }

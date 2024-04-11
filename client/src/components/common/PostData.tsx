@@ -1,6 +1,10 @@
-import React from 'react';
+import { FC } from 'react';
 
-export const PostData = ({ data }) => {
+interface PostDataProps {
+  data: any;
+}
+
+export const PostData: FC<PostDataProps> = ({ data }) => {
   const { username, time, number } = data;
   return (
     <div className='text-sm font-light p-1'>

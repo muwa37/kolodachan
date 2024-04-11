@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 import { getOffsetCommentsOfThread } from '../../API/comments';
@@ -8,7 +8,11 @@ import { ThreadBody } from './ThreadBody';
 import { ThreadCommentsList } from './ThreadCommentsList';
 import { ThreadHeader } from './ThreadHeader';
 
-export const ThreadInBoard = ({ id }) => {
+interface ThreadInBoardProps {
+  id: string;
+}
+
+export const ThreadInBoard: FC<ThreadInBoardProps> = ({ id }) => {
   const { title, text, attachments, data } = getOneThread(id);
   const offsetComments = getOffsetCommentsOfThread(id);
   const { pathname } = useLocation();

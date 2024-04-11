@@ -1,6 +1,19 @@
+import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export const BoardHeader = ({ title, description, img, info }) => {
+interface BoardHeaderProps {
+  title: string;
+  description: string;
+  img: string;
+  info: string;
+}
+
+export const BoardHeader: FC<BoardHeaderProps> = ({
+  title,
+  description,
+  img,
+  info,
+}) => {
   const { pathname } = useLocation();
 
   return (

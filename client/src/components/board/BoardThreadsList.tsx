@@ -1,9 +1,13 @@
-import React from 'react';
+import { FC } from 'react';
 import { getThreadsByBoard } from '../../API/threads';
 import { PostForm } from '../common/PostForm';
-import { ThreadInBoard } from '../thread/ ThreadInBoard';
+import { ThreadInBoard } from '../thread/ThreadInBoard';
 
-export const BoardThreadsList = ({ boardId }) => {
+interface BoardThreadsListProps {
+  boardId: string;
+}
+
+export const BoardThreadsList: FC<BoardThreadsListProps> = ({ boardId }) => {
   const threads = getThreadsByBoard(boardId);
 
   return (

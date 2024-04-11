@@ -1,6 +1,14 @@
+import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-export const Card = ({ title, description, image, id }) => {
+interface CardProps {
+  title: string;
+  description: string;
+  image: string;
+  id: string;
+}
+
+export const Card: FC<CardProps> = ({ title, description, image, id }) => {
   const { pathname } = useLocation();
 
   return (

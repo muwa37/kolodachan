@@ -1,10 +1,16 @@
-import React from 'react';
+import { FC } from 'react';
 import { ThreadComment } from './ThreadComment';
 
-export const ThreadCommentsList = ({ comments }) => {
+interface ThreadCommentsListProps {
+  comments: any;
+}
+
+export const ThreadCommentsList: FC<ThreadCommentsListProps> = ({
+  comments,
+}) => {
   return (
     <div className='w-full my-1'>
-      {comments.map(comment => (
+      {comments.map((comment: any) => (
         <ThreadComment
           key={comment.id}
           text={comment.text}

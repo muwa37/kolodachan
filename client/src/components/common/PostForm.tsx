@@ -1,8 +1,12 @@
-import { useId, useState } from 'react';
+import { FC, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 
-export const PostForm = ({ parentId }) => {
+interface PostFormProps {
+  parentId: string;
+}
+
+export const PostForm: FC<PostFormProps> = ({ parentId }) => {
   const [isOpened, setIsOpened] = useState(false);
   const fileInputId = useId();
 
@@ -14,7 +18,7 @@ export const PostForm = ({ parentId }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmitHandler = data => {
+  const onSubmitHandler = (data: any) => {
     console.log(data);
   };
 

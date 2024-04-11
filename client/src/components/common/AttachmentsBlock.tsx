@@ -1,9 +1,16 @@
-import downloadIcon from '@assets/images/icons/download.svg';
+import downloadIcon from '@/assets/images/icons/download.svg';
+import { FC } from 'react';
 
-export const AttachmentsBlock = ({ attachments }) => {
+interface AttachmentsBlockProps {
+  attachments: any;
+}
+
+export const AttachmentsBlock: FC<AttachmentsBlockProps> = ({
+  attachments,
+}) => {
   return (
     <div className='flex'>
-      {attachments.map(item => (
+      {attachments.map((item: any) => (
         <div
           key={item.name}
           className='p-2 flex flex-col justify-center items-center max-w-1/4'
