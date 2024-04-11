@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 
-import searchIcon from '@/assets/images/icons/search.svg';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import SearchIcon from '@/assets/images/icons/search.svg';
+import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 type BoardNavProps = {
   view: string;
@@ -19,15 +19,15 @@ export const BoardNav: FC<BoardNavProps> = ({
   sort,
   changeSort,
 }) => {
-  const [isSearchActive, setIsSearchActive] = useState(false);
-  const [isSortActive, setIsSortActive] = useState(false);
+  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+  const [isSortActive, setIsSortActive] = useState<boolean>(false);
   const [newSort, setNewSort] = useState(sort);
 
   const toggleSearch = () => {
-    setIsSearchActive(!isSearchActive);
+    setIsSearchActive(prev => !prev);
   };
   const toggleSort = () => {
-    setIsSortActive(!isSortActive);
+    setIsSortActive(prev => !prev);
   };
   const changeNewSort = (changedSort: { type: string; order: string }) => {
     setNewSort(changedSort);
@@ -41,8 +41,9 @@ export const BoardNav: FC<BoardNavProps> = ({
     <div className='w-full p-2 flex items-center justify-start h-16'>
       <div className='h-full'>
         <button onClick={toggleSearch} className='size-4 m-2'>
-          <img src={searchIcon} alt='' />
+          <SearchIcon />
         </button>
+
         {isSearchActive && (
           <input className='rounded-sm h-full px-2 ' placeholder='search' />
         )}

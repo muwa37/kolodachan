@@ -1,4 +1,4 @@
-import React from 'react';
+import { UserSubscriptionPanel } from '@/components/wrapper/UserSubscriptionPanel';
 import { Outlet } from 'react-router-dom';
 import { Footer } from '../components/wrapper/Footer';
 import { Navbar } from '../components/wrapper/Navbar';
@@ -9,7 +9,9 @@ export const Main = () => {
       <Navbar />
       <div className='overflow-auto py-2 h-[90%] border-y-2 border-teal-800'>
         <Outlet />
+        <UserSubscriptionPanel />
       </div>
+
       <Footer />
     </div>
   );

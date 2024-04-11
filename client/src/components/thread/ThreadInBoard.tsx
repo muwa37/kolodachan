@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 import { getOffsetCommentsOfThread } from '../../API/comments';
 import { getOneThread } from '../../API/threads';
-import hideIcon from '../../assets/images/icons/hide.svg';
+import HideIcon from '../../assets/images/icons/hide.svg';
 import { ThreadBody } from './ThreadBody';
 import { ThreadCommentsList } from './ThreadCommentsList';
 import { ThreadHeader } from './ThreadHeader';
@@ -27,7 +27,7 @@ export const ThreadInBoard: FC<ThreadInBoardProps> = ({ id }) => {
           go to thread
         </Link>
         <button className='size-4 ml-3 mx-2'>
-          <img src={hideIcon} alt='hide' />
+          <HideIcon />
         </button>
         <ThreadHeader data={data} id={id} />
       </div>

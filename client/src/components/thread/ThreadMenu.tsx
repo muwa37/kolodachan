@@ -1,16 +1,14 @@
-import React from 'react';
-
-import favoriteIcon from '../../assets/images/icons/favorite.svg';
-import reportIcon from '../../assets/images/icons/report.svg';
+import FavoriteIcon from '../../assets/images/icons/favorite.svg';
+import ReportIcon from '../../assets/images/icons/report.svg';
 
 export const ThreadMenu = () => {
   return (
     <div className='flex items-center justify-start'>
       <button className='size-4 m-2'>
-        <img src={reportIcon} alt='report' />
+        <ReportIcon />
       </button>
       <button className='size-4 m-2'>
-        <img src={favoriteIcon} alt='add to favorite' />
+        <FavoriteIcon />
       </button>
     </div>
   );

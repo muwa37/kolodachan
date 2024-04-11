@@ -1,4 +1,4 @@
-import downloadIcon from '@/assets/images/icons/download.svg';
+import DownloadIcon from '@/assets/images/icons/download.svg';
 import { FC } from 'react';
 
 interface AttachmentsBlockProps {
@@ -18,7 +18,7 @@ export const AttachmentsBlock: FC<AttachmentsBlockProps> = ({
           <div className='flex items-center justify-center'>
             <p className='text-sm font-light text-violet-600'>{item.name}</p>
             <button className='size-4 m-2'>
-              <img src={downloadIcon} alt='download' />
+              <DownloadIcon />
             </button>
           </div>
           <img src={item.link} alt='related' />
