@@ -1,12 +1,13 @@
+import { getOneBoard } from '@/API/boards';
+import { getThreadsByBoard } from '@/API/threads';
+import { BoardHeader } from '@/components/board/BoardHeader';
+import { BoardNav } from '@/components/board/BoardNav';
+import { BoardThreadsList } from '@/components/board/BoardThreadsList.jsx';
+import { CardList } from '@/components/common/CardList';
+import { PostForm } from '@/components/common/PostForm.jsx';
+
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getOneBoard } from '../API/boards';
-import { getThreadsByBoard } from '../API/threads';
-import { BoardHeader } from '../components/board/BoardHeader';
-import { BoardNav } from '../components/board/BoardNav';
-import { BoardThreadsList } from '../components/board/BoardThreadsList.jsx';
-import { CardList } from '../components/common/CardList';
-import { PostForm } from '../components/common/PostForm.jsx';
 
 export const Board = () => {
   const { boardId } = useParams();

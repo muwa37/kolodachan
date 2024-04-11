@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import searchIcon from '../../assets/images/icons/search.svg';
+import searchIcon from '@/assets/images/icons/search.svg';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 
 type BoardNavProps = {
@@ -41,7 +41,7 @@ export const BoardNav: FC<BoardNavProps> = ({
     <div className='w-full p-2 flex items-center justify-start h-16'>
       <div className='h-full'>
         <button onClick={toggleSearch} className='size-4 m-2'>
-          <img src={searchIcon} alt='search' />
+          <img src={searchIcon} alt='' />
         </button>
         {isSearchActive && (
           <input className='rounded-sm h-full px-2 ' placeholder='search' />

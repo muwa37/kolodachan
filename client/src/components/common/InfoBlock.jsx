@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const InfoBlock = ({ title, info }) => {
   return (
     <div className='w-full flex flex-col items-center justify-start'>

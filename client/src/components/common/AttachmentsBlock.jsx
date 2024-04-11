@@ -1,6 +1,4 @@
-import React from 'react';
-
-import downloadIcon from '../../assets/images/icons/download.svg';
+import downloadIcon from '@assets/images/icons/download.svg';
 
 export const AttachmentsBlock = ({ attachments }) => {
   return (
