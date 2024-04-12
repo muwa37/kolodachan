@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { getOneBoard } from '../API/boards';
-import { getCommentsByThread } from '../API/comments';
-import { getOneThread } from '../API/threads';
+import { getOneBoard } from '../api/boards';
+import { getCommentsByThread } from '../api/comments';
+import { getOneThread } from '../api/threads';
 import { BoardHeader } from '../components/board/BoardHeader';
 import { PostForm } from '../components/common/PostForm';
 import { ThreadBody } from '../components/thread/ThreadBody';

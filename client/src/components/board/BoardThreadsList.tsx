@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { getThreadsByBoard } from '../../API/threads';
+import { getThreadsByBoard } from '../../api/threads';
 import { PostForm } from '../common/PostForm';
 import { ThreadInBoard } from '../thread/ThreadInBoard';
 

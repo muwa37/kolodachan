@@ -1,4 +1,4 @@
-import { getRules } from '../API/info';
+import { getRules } from '../api/info';
 import { InfoBlock } from '../components/common/InfoBlock';
 
 export const Rules = () => {

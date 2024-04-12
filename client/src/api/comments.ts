@@ -73,7 +73,7 @@ const comments: Comment[] = [
 
 const offset = 3;
 
-export function getCommentsByThread(threadId: string) {
+export function getCommentsByThread(threadId: string): Comment[] {
   return comments.filter(comment => comment.thread === threadId);
 }
 

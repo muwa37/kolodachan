@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import { getOffsetCommentsOfThread } from '../../API/comments';
-import { getOneThread } from '../../API/threads';
+import { getOffsetCommentsOfThread } from '../../api/comments';
+import { getOneThread } from '../../api/threads';
 import HideIcon from '../../assets/images/icons/hide.svg';
 import { ThreadBody } from './ThreadBody';
 import { ThreadCommentsList } from './ThreadCommentsList';

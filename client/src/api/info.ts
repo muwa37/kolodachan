@@ -19,10 +19,10 @@ const about: Info[] = [
   },
 ];
 
-export const getRules = () => {
+export const getRules = (): Info => {
   return rules;
 };
 
-export const getAbout = () => {
+export const getAbout = (): Info[] => {
   return about;
 };

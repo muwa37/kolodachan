@@ -1,4 +1,4 @@
-import { getThreads } from '../API/threads';
+import { getThreads } from '../api/threads';
 import { CardList } from '../components/common/CardList';
 
 export const ThreadsList = () => {

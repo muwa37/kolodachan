@@ -1,4 +1,4 @@
-import { getBoards } from '../API/boards';
+import { getBoards } from '../api/boards';
 import { CardList } from '../components/common/CardList';
 
 export const BoardsList = () => {

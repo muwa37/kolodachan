@@ -1,5 +1,5 @@
-import { getOneBoard } from '@/API/boards';
-import { getThreadsByBoard } from '@/API/threads';
+import { getOneBoard } from '@/api/boards';
+import { getThreadsByBoard } from '@/api/threads';
 import { BoardHeader } from '@/components/board/BoardHeader';
 import { BoardNav } from '@/components/board/BoardNav';
 import { BoardThreadsList } from '@/components/board/BoardThreadsList';

@@ -89,12 +89,12 @@ export function getThreads() {
   return threads;
 }
 
-export function getOneThread(id: string) {
+export function getOneThread(id: string): Thread {
   const threads = getThreads();
   return threads.find(thread => thread.id === id);
 }
 
-export function getThreadsByBoard(boardId: string) {
+export function getThreadsByBoard(boardId: string): Thread[] {
   const title = getOneBoard(boardId)?.title;
   const threads = getThreads();
   return threads.filter(thread => thread.board === title);

@@ -1,5 +1,5 @@
 import { InfoBlock } from '@/components/common/InfoBlock';
-import { getAbout } from '../API/info';
+import { getAbout } from '../api/info';
 
 export const About = () => {
   const about = getAbout();
