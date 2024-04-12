@@ -1,10 +1,11 @@
+import { Attachment } from '@/types';
 import { FC } from 'react';
 import { AttachmentsBlock } from '../common/AttachmentsBlock';
 
 interface ThreadBodyProps {
   title: string;
   text: string;
-  attachments: any;
+  attachments: Attachment[];
 }
 
 export const ThreadBody: FC<ThreadBodyProps> = ({

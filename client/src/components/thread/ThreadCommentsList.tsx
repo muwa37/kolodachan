@@ -1,8 +1,9 @@
+import { Comment } from '@/types';
 import { FC } from 'react';
 import { ThreadComment } from './ThreadComment';
 
 interface ThreadCommentsListProps {
-  comments: any;
+  comments: Comment[];
 }
 
 export const ThreadCommentsList: FC<ThreadCommentsListProps> = ({

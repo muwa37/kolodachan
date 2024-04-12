@@ -9,7 +9,7 @@ export const BoardsList = () => {
       <div>
         <h1 className='text-6xl font-extrabold'>all boards</h1>
       </div>
-      <CardList cards={boards} />
+      <CardList boardCards={boards} />
     </section>
   );
 };

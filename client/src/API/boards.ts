@@ -1,10 +1,4 @@
-type Board = {
-  title: string;
-  id: string;
-  description: string;
-  info: string;
-  img: string;
-};
+import { Board } from '@/types';
 
 export function getBoards() {
   const boards: Board[] = [

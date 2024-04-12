@@ -1,4 +1,6 @@
-const comments = [
+import { Comment } from '@/types';
+
+const comments: Comment[] = [
   {
     id: '1',
     text: 'a 1st thread 1st replay sample text',

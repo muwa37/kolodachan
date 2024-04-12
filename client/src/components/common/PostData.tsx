@@ -1,7 +1,8 @@
+import { Data } from '@/types';
 import { FC } from 'react';
 
 interface PostDataProps {
-  data: any;
+  data: Data;
 }
 
 export const PostData: FC<PostDataProps> = ({ data }) => {

@@ -1,8 +1,9 @@
 import DownloadIcon from '@/assets/images/icons/download.svg';
+import { Attachment } from '@/types';
 import { FC } from 'react';
 
 interface AttachmentsBlockProps {
-  attachments: any;
+  attachments: Attachment[];
 }
 
 export const AttachmentsBlock: FC<AttachmentsBlockProps> = ({

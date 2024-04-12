@@ -1,11 +1,12 @@
 import { FC } from 'react';
 
+import { Data } from '@/types';
 import { PostData } from '../common/PostData';
 import { ReplyButton } from '../common/ReplyButton';
 import { ThreadMenu } from './ThreadMenu';
 
 interface ThreadHeaderProps {
-  data: any;
+  data: Data;
   id: string;
 }
 

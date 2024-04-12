@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 interface InfoBlockProps {
   title: string;
-  info: any;
+  info: string[];
 }
 
 export const InfoBlock: FC<InfoBlockProps> = ({ title, info }) => {
@@ -11,7 +11,7 @@ export const InfoBlock: FC<InfoBlockProps> = ({ title, info }) => {
       <h2 className='text-2xl font-semibold'>{title}</h2>
       <div className='underline underline-offset-2 flex flex-col justify-start items-start w-2/3'>
         <ul>
-          {info.map((item: any, ind: number) => (
+          {info.map((item, ind) => (
             <li key={ind}>{item}</li>
           ))}
         </ul>

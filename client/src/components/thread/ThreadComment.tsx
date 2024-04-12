@@ -1,3 +1,4 @@
+import { Attachment, Data } from '@/types';
 import { FC } from 'react';
 import { AttachmentsBlock } from '../common/AttachmentsBlock';
 import { PostData } from '../common/PostData';
@@ -5,8 +6,8 @@ import { ReplyButton } from '../common/ReplyButton';
 
 interface ThreadCommentProps {
   text: string;
-  data: string;
-  attachments: any;
+  data: Data;
+  attachments: Attachment[];
 }
 
 export const ThreadComment: FC<ThreadCommentProps> = ({

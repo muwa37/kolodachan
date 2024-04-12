@@ -9,7 +9,7 @@ export const ThreadsList = () => {
       <div>
         <h1 className='text-6xl font-extrabold'>all threads</h1>
       </div>
-      <CardList cards={threads} />
+      <CardList threadCards={threads} />
     </section>
   );
 };

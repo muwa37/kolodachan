@@ -1,9 +1,12 @@
-const rules = {
+import { Info } from '@/types';
+
+const rules: Info = {
+  id: '0',
   title: 'obscshie pravila ujutnogo foruma',
   info: ["1. bud' nyashkoj", '2. zhivi kawaiino'],
 };
 
-const about = [
+const about: Info[] = [
   {
     title: 'kuda ya popal',
     id: '1',

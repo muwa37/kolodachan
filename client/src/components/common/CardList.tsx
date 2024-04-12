@@ -1,19 +1,32 @@
+import { Board, Thread } from '@/types';
 import { FC } from 'react';
 import { Card } from './Card';
 
 interface CardListProps {
-  cards: any;
+  threadCards?: Thread[];
+  boardCards?: Board[];
 }
 
-export const CardList: FC<CardListProps> = ({ cards }) => {
+export const CardList: FC<CardListProps> = ({ threadCards, boardCards }) => {
   return (
     <div className='h-full w-full grid grid-cols-3 grid-rows-3 gap-4 p-4'>
-      {cards.map((card: any) => (
+      if(threadCards){' '}
+      {threadCards.map(card => (
         <Card
           key={card.id}
           title={card.title}
-          description={card.description || card.text}
-          image={card.image}
+          description={card.text}
+          image={card.attachments[0].link}
+          id={card.id}
+        />
+      ))}
+      if(boardCards){' '}
+      {boardCards.map(card => (
+        <Card
+          key={card.id}
+          title={card.title}
+          description={card.description}
+          image={card.img}
           id={card.id}
         />
       ))}

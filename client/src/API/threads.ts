@@ -1,7 +1,8 @@
+import { Thread } from '@/types';
 import { getOneBoard } from './boards';
 
 export function getThreads() {
-  const threads = [
+  const threads: Thread[] = [
     {
       id: '0',
       title: 'a 1st thread',

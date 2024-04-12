@@ -41,7 +41,7 @@ export const Board = () => {
         {view === 'scroll' ? (
           <BoardThreadsList boardId={title} />
         ) : (
-          <CardList cards={getThreadsByBoard(boardId)} />
+          <CardList threadCards={getThreadsByBoard(boardId)} />
         )}
       </div>
     );
