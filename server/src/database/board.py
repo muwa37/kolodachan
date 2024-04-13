@@ -54,8 +54,6 @@ class Board(BaseDb):
             SELECT
                 tag,
                 title,
-<<<<<<< HEAD
-=======
                 description,
                 default_name,
                 name_change_allowed,
@@ -74,7 +72,6 @@ class Board(BaseDb):
                 id,
                 tag,
                 title,
->>>>>>> 27d5fd21ca8b553fbbcfa62b8222f585ac9d2f82
                 description,
                 default_name,
                 name_change_allowed,
@@ -83,8 +80,9 @@ class Board(BaseDb):
                 allowed_file_types,
                 max_file_size
             FROM boards
+            WHERE tag = $1
             '''
-        return await self._execute(query)
+        return await self._execute(query, tag)
 
     async def update(
         self,

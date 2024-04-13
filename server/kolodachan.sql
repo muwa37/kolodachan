@@ -41,7 +41,6 @@ CREATE TABLE threads (
 );
 
 CREATE TABLE comments (
-<<<<<<< HEAD
     id serial PRIMARY KEY,
     comment_id integer NOT NULL,
     thread_id integer REFERENCES threads(id),
@@ -62,7 +61,6 @@ CREATE TABLE files (
     full_link text NOT NULL CHECK (length(full_link) < 400),
     compressed_link text CHECK (length(compressed_link) < 400),
     creation_date timestamp NOT NULL DEFAULT now()
-=======
     id SERIAL PRIMARY KEY,
     comment_id INTEGER NOT NULL,
     thread_id INTEGER REFERENCES threads(id),
@@ -75,7 +73,6 @@ CREATE TABLE files (
     original_filename TEXT,
     sage BOOLEAN NOT NULL DEFAULT false,
     creation_date TIMESTAMP NOT NULL DEFAULT now()
->>>>>>> 27d5fd21ca8b553fbbcfa62b8222f585ac9d2f82
 );
 
 
