@@ -19,7 +19,9 @@
 /client/yarn-error.log*
 
 /server/.venv
-/server/.config.toml
+/server/config.toml
+/server/files
+/server/src/test/wordlist.txt
 
 __pycache__/
 .pyc
