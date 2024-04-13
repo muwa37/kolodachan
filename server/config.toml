@@ -1,0 +1,6 @@
+[postgre]
+host = '127.0.0.1'
+port = 5432
+user = 'madoka'
+password = 'madoka10iz10'
+dbname = 'kolodachan'
