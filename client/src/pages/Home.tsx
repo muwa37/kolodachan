@@ -1,6 +1,8 @@
 import kolodaHomeImg from '../assets/images/static/koloda-home.png';
 
 export const Home = () => {
+  console.log(process.env);
+
   return (
     <section className='flex w-full h-full items-center justify-evenly'>
       <div className='h-5/6 flex flex-col justify-evenly items-center'>

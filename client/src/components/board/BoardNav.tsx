@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 
 import SearchIcon from '@/assets/images/icons/search.svg';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
+import { sortOrders, sortTypes } from '@/utils/consts';
 
 type BoardNavProps = {
   view: string;
@@ -9,9 +10,6 @@ type BoardNavProps = {
   sort: { type: string; order: string };
   changeSort: (newSort: { type: string; order: string }) => void;
 };
-
-const sortTypes = ['date', 'popularity', 'alphabet'];
-const sortOrders = ['decrease', 'increase'];
 
 export const BoardNav: FC<BoardNavProps> = ({
   view,

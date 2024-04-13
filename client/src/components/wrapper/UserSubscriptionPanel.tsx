@@ -1,8 +1,7 @@
 import HideIcon from '@/assets/images/icons/hide.svg';
 import ShowIcon from '@/assets/images/icons/show.svg';
+import { categories } from '@/utils/consts';
 import { useState } from 'react';
-
-const categories = ['favorites', 'popular'];
 
 export const UserSubscriptionPanel = () => {
   const [active, setActive] = useState<boolean>(false);

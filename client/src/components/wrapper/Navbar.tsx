@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import kolodaNavLogo from '../../assets/images/static/koloda-nav-icon.png';
 
