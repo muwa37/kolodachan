@@ -1,11 +1,13 @@
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import DotEnvPlugin from 'dotenv-webpack';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';
 import webpack, { Configuration, DefinePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+
 import { BuildOptions } from './types';
 
 export function buildPlugins({
@@ -21,6 +23,9 @@ export function buildPlugins({
     new HtmlWebpackPlugin({
       template: paths.html,
       favicon: path.resolve(paths.public, 'favicon.ico'),
+    }),
+    new DotEnvPlugin({
+      path: paths.env,
     }),
     new DefinePlugin({
       __PLATFORM__: JSON.stringify(platform),
