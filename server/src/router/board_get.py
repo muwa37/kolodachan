@@ -1,76 +1,111 @@
 from database import Database
 from fastapi import APIRouter, HTTPException, Response
-from models import Comment, Thread
+from models import Boards, Comment, Threads
 
 router = APIRouter(prefix='/boards', tags=['board'])
 db = Database()
 
 
-@router.get('/')
-def get_boards():
-    '''Retrive all avalible boards'''
+@router.get('/', response_model=Boards)
+def get_boards(tag: str | None = None):
+    '''retrieve all avalible boards
+    - **tag** board tag if you want to retrieve one specific board
+        **optional query parameter*
+    '''
 
-    return db.board.get_all()
+    boards = db.board.get_all()
+    if tag:
+        boards = [board for board in boards if board['tag'] == tag]
+    if not boards:
+        raise HTTPException(status_code=404, detail='Not found')
+    return boards
 
 
 @router.get('/{tag}')
-def get_board(tag):
-    '''Retruve one board'''
+def get_board(tag: str):
+    '''retrieve one board'''
     return db.board.get_one(tag)
 
 
-@router.get("/{tag}/threads", tags=['thread'])
+@router.get("/{tag}/threads", tags=['thread'], response_model=Threads)
 def get_treads(tag,
                response: Response,
-               limit: int = 10,
-               step: int = 0,
-               comment_limit: int = -3):
-    '''Retrive threads from one board
+               threads_limit: int = 10,
+               threads_step: int = 0,
+               comments_offset: int = -3):
+    '''retrieve threads with comments from one board
         - **tag**: board tag **mandatory path parameter*
-        - **limit**: max number of threads **optional query parameter*
-        - **step**: number of thread to skip **optional query parameter*
-        - **comment_limit**: number of comments to retrive for each thread
+        - **threads_limit**: max number of threads **optional query parameter*
+        - **threads_step**: number of thread to skip
         **optional query parameter*
-            - -3 retrive only last 3 comments
-            - +3 retrive only first 3 comments
-            - 0 retrive all comments
+        - **comment_offset**: number of comments to retrieve for each thread
+        **optional query parameter*
+            - -3 retrieve only last 3 comments
+            - +3 retrieve only first 3 comments
+            - 0 retrieve all comments
     '''
 
     board = db.board.get_one(tag)
-    if not board:
-        raise HTTPException(status_code=404, detail='Board does not exist')
-        return
-    threads_id = db.thread.get_multiple(board['id'], limit, step)
+    threads_id = db.thread.get_multiple(board['id'], threads_limit,
+                                        threads_step)
     comments = db.comment.get_multiple(threads_id)
-    threads = {}
+    threads = sort_threads(threads_id, comments, comments_offset)
+    return threads
+
+
+@router.get("/{tag}/threads/{thread_number}",
+            tags=['thread', 'comment'],
+            response_model=Threads)
+def get_thread(tag: str,
+               thread_number: int,
+               response: Response,
+               comments_offset: int = 0,
+               comments_limit: int | None = None):
+    """retrieve single thread with comments
+    - **tag** board tag **mandatory path parameter*
+    - **thread_number** thread number or number of first post in thread
+        **mandatory path parameter*
+    - **comments_offset** number of comments to skip
+        **optional query parameter*
+    - **comments_limit** number of comments to retrieve
+        **optional query parameter*
+    """
+    board = db.board.get_one(tag)
+    thread_id = [db.thread.get(board['id'], thread_number)]
+    comments = db.comment.get_multiple(thread_id)
+    thread = sort_threads(thread_id, comments, comments_offset, comments_limit)
+    return thread
+
+
+@router.get("/{tag}/comment/{id}", tags=['comment'], response_model=Comment)
+def get_comment(tag: str, id: int, response: Response):
+    pass
+
+
+def sort_threads(threads_id: list,
+                 comments: dict,
+                 comments_offset: int,
+                 comments_limit: int | None = None):
+    if comments_limit:
+        comments_limit = comments_offset + comments_limit
+    threads = []
     for id in threads_id:
         tmp_comments = [
             comment for comment in comments if comment['thread_id'] == id
         ]
+        if not tmp_comments:
+            continue
+
         sorted_comments = []
         sorted_comments.append(tmp_comments.pop(0))
-        tmp_comments = tmp_comments[comment_limit:]
+        tmp_comments = tmp_comments[comments_offset:comments_limit]
         sorted_comments.extend(tmp_comments)
-        threads[sorted_comments[0]['comment_number']] = sorted_comments
-    for thread in threads.values():
-        for comment in thread:
+        thread = {
+            'thread_number': sorted_comments[0]['comment_number'],
+            'comments': sorted_comments
+        }
+        threads.append(thread)
+    for thread in threads:
+        for comment in thread['comments']:
             del comment['thread_id']
-
     return threads
-
-
-@router.get("/{tag}/threads/{thread_number}", tags=['thread', 'comment'])
-def get_thread(tag: str, thread_number: int, response: Response):
-    """Returns single thread"""
-    board = db.board.get_one(tag)
-    thread_id = db.thread.get(board['id'], thread_number)
-    comments = db.comment.get_multiple(thread_id)
-    print(comments)
-    for comment in comments:
-        del comment['thread_id']
-    return comments
-
-
-@router.get("/{tag}/comment/{id}")
-def get_comment(tag, id, response: Response):
-    pass

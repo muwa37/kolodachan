@@ -54,6 +54,27 @@ class Board(BaseDb):
             SELECT
                 tag,
                 title,
+<<<<<<< HEAD
+=======
+                description,
+                default_name,
+                name_change_allowed,
+                bumplimit,
+                max_message_length,
+                max_file_size
+            FROM boards
+            WHERE enabled = true
+        '''
+        result = self.execute('read', query, row_factory=dict_row)
+        return result
+
+    def get_one(self, tag: str):
+        query = '''
+            SELECT
+                id,
+                tag,
+                title,
+>>>>>>> 27d5fd21ca8b553fbbcfa62b8222f585ac9d2f82
                 description,
                 default_name,
                 name_change_allowed,
