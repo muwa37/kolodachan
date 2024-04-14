@@ -61,18 +61,6 @@ CREATE TABLE files (
     full_link text NOT NULL CHECK (length(full_link) < 400),
     compressed_link text CHECK (length(compressed_link) < 400),
     creation_date timestamp NOT NULL DEFAULT now()
-    id SERIAL PRIMARY KEY,
-    comment_id INTEGER NOT NULL,
-    thread_id INTEGER REFERENCES threads(id),
-    comment_number INTEGER NOT NULL,
-    title TEXT NOT NULL CHECK(length(title) < 200),
-    message TEXT NOT NULL CHECK(length(message) < 8192),
-    user_name TEXT NOT NULL CHECK(length(user_name) < 40),
-    file_link TEXT,
-    file_link_commpressed TEXT,
-    original_filename TEXT,
-    sage BOOLEAN NOT NULL DEFAULT false,
-    creation_date TIMESTAMP NOT NULL DEFAULT now()
 );
 
 
