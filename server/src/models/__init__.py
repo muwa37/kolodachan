@@ -1,1 +1,1 @@
-from .models import Boards, Comment, Thread, Threads
+from .boards import BoardRecieve
