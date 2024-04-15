@@ -1,9 +1,9 @@
 import { Board } from '@/types';
 import { BoardSliceState, Status } from '@/types/store';
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchPizzas = createAsyncThunk(
+export const fetchBoard = createAsyncThunk(
   'board/fetchBoardStatus',
   async (tag: string) => {
     const { data } = await axios.get<Board>('');
@@ -27,15 +27,15 @@ const boardSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchPizzas.pending, state => {
+    builder.addCase(fetchBoard.pending, state => {
       state.loadingStatus = Status.LOADING;
       state.board = null;
     });
-    builder.addCase(fetchPizzas.fulfilled, (state, action) => {
+    builder.addCase(fetchBoard.fulfilled, (state, action) => {
       state.board = action.payload;
       state.loadingStatus = Status.SUCCESS;
     });
-    builder.addCase(fetchPizzas.rejected, state => {
+    builder.addCase(fetchBoard.rejected, state => {
       state.loadingStatus = Status.ERROR;
       state.board = null;
     });
