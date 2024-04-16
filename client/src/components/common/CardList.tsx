@@ -26,7 +26,7 @@ export const CardList: FC<CardListProps> = ({ threadCards, boardCards }) => {
             key={card.id}
             title={card.title}
             description={card.description}
-            image={card.img}
+            image={card.image}
             id={card.id}
           />
         ))}

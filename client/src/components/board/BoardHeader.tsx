@@ -4,14 +4,14 @@ import { Link, useLocation } from 'react-router-dom';
 interface BoardHeaderProps {
   title: string;
   description: string;
-  img: string;
+  image: string;
   info: string;
 }
 
 export const BoardHeader: FC<BoardHeaderProps> = ({
   title,
   description,
-  img,
+  image,
   info,
 }) => {
   const { pathname } = useLocation();
@@ -19,7 +19,7 @@ export const BoardHeader: FC<BoardHeaderProps> = ({
   return (
     <div className='w-full flex flex-col items-center h-fit py-2 justify-evenly border-b-2 border-teal-800'>
       <div>
-        <img src={img} alt={title + '-logo'} />
+        <img src={image} alt={title + '-logo'} />
       </div>
       <div className='flex flex-col items-center justify-evenly'>
         <h1 className='text-6xl font-extrabold'>{title}</h1>

@@ -9,7 +9,6 @@ export type UserSubscriptionsSliceState = {
 export type BoardSliceState = {
   board: Board | null;
   loadingStatus: Status;
-  id: string;
 };
 
 export enum Status {

@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { getOneBoard } from '../api/boards';
+import { selectBoard } from '@/store/board/selectors';
+import { useSelector } from 'react-redux';
 import { getCommentsByThread } from '../api/comments';
 import { getOneThread } from '../api/threads';
 import { BoardHeader } from '../components/board/BoardHeader';
@@ -12,7 +13,12 @@ import { ThreadHeader } from '../components/thread/ThreadHeader';
 export const Thread = () => {
   const { threadId, boardId } = useParams();
   const { data, id, title, text, attachments } = getOneThread(threadId);
-  const { title: boardTitle, description, info, img } = getOneBoard(boardId);
+  const {
+    title: boardTitle,
+    description,
+    info,
+    image,
+  } = useSelector(selectBoard).board;
   const comments = getCommentsByThread(threadId);
 
   return (
@@ -21,7 +27,7 @@ export const Thread = () => {
         title={boardTitle}
         description={description}
         info={info}
-        img={img}
+        image={image}
       />
       <PostForm parentId={id} />
       <div className='flex flex-col items-start justify-center bg-slate-300 mt-2 px-2 py-1 w-[1270px] rounded-md'>
