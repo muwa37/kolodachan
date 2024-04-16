@@ -42,5 +42,13 @@ const userSubscriptionsSlice = createSlice({
 
 export default userSubscriptionsSlice.reducer;
 
-export const { addFavoriteThread, addUserComment, addUserThreadSubscription } =
-  userSubscriptionsSlice.actions;
+export const {
+  addFavoriteThread,
+  addUserComment,
+  addUserThreadSubscription,
+  subscribeToOwnComments,
+  unsubscribeToOwnComments,
+  subscribeToOwnThreads,
+  unsubscribeToOwnThreads,
+  deleteFavoriteThread,
+} = userSubscriptionsSlice.actions;

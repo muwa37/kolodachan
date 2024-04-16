@@ -1,12 +1,30 @@
 import HideIcon from '@/assets/images/icons/hide.svg';
 import ShowIcon from '@/assets/images/icons/show.svg';
+import { useAppDispatch } from '@/store';
+import { selectUserSubscriptions } from '@/store/userSubscriptions/selectors';
+import {
+  subscribeToOwnComments,
+  subscribeToOwnThreads,
+  unsubscribeToOwnComments,
+  unsubscribeToOwnThreads,
+} from '@/store/userSubscriptions/slice';
 import { categories } from '@/utils/consts';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export const UserSubscriptionPanel = () => {
   const [active, setActive] = useState<boolean>(false);
   const [category, setCategory] = useState('favorites');
   const [isCategoriesActive, setIsCategoriesActive] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+  const userSubscriptions = useSelector(selectUserSubscriptions);
+
+  const {
+    isSubscribedToOwnComments,
+    isSubscribedToOwnThreads,
+    favoriteThreads,
+  } = userSubscriptions;
 
   const toggleUserSubscriptionPanel = () => {
     setActive(prev => !prev);
@@ -15,8 +33,22 @@ export const UserSubscriptionPanel = () => {
     setIsCategoriesActive(prev => !prev);
   };
   const onCategoryChange = () => {
-    setCategory(prev => (prev === 'favorites' ? 'popular' : 'favorites'));
+    setCategory(category === 'favorites' ? 'popular' : 'favorites');
     setIsCategoriesActive(prev => !prev);
+  };
+  const toggleSubscriptionToOwnComments = () => {
+    dispatch(
+      isSubscribedToOwnComments
+        ? unsubscribeToOwnComments()
+        : subscribeToOwnComments()
+    );
+  };
+  const toggleSubscriptionToOwnThreads = () => {
+    dispatch(
+      isSubscribedToOwnThreads
+        ? unsubscribeToOwnThreads()
+        : subscribeToOwnThreads()
+    );
   };
 
   return (
@@ -39,15 +71,22 @@ export const UserSubscriptionPanel = () => {
             {category === 'favorites' ? (
               <div>
                 <div>
-                  <div>
-                    <input type='checkbox' />
-                    <span>show your treads updates</span>
+                  <div onClick={toggleSubscriptionToOwnThreads}>
+                    <input type='checkbox' checked={isSubscribedToOwnThreads} />
+                    <span>subscribe to your threads</span>
                   </div>
-                  <div>
-                    <input type='checkbox' />
-                    <span>show replies to your comments</span>
+                  <div onClick={toggleSubscriptionToOwnComments}>
+                    <input
+                      type='checkbox'
+                      checked={isSubscribedToOwnComments}
+                    />
+                    <span>subscribe to your comments</span>
                   </div>
-                  <div>sample favorite updates</div>
+                  <ul>
+                    {favoriteThreads.map(thread => (
+                      <li>{thread}</li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ) : (
