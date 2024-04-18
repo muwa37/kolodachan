@@ -21,7 +21,7 @@
 /server/.venv
 /server/config.toml
 /server/files
-/server/src/test/wordlist.txt
+/server/test/wordlist.txt
 
 __pycache__/
 .pyc
