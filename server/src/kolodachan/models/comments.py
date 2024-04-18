@@ -1,14 +1,14 @@
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
-from pydantic import BaseModel, Optional
+from pydantic import BaseModel
 
 from .files import File
 
 
-class CommentSend(BaseModel):
+class CommentRetrieve(BaseModel):
     comment_number: int
-    comment_id: int
+    position_in_thread: int
     user_name: str
     title: str
     message: str
@@ -17,9 +17,8 @@ class CommentSend(BaseModel):
     creation_date: datetime
 
 
-class CommentRecieve(BaseModel):
+class CommentCreate(BaseModel):
     user_name: str
     title: str
     message: str
-    files: Optional[List[File] | None] = None
     sage: Optional[bool] = True

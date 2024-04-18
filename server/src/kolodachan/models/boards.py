@@ -3,23 +3,24 @@ from typing import List, Optional
 from pydantic import BaseModel, PositiveInt
 
 
-class Board(BaseModel):
+class BoardRetrieve(BaseModel):
+    id: int
     tag: str
     title: str
-    desctiption: str
+    description: str
     default_name: str
     name_change_allowed: bool
     bumplimit: int
     max_message_length: int
-    allowed_file_types: List[str]
+    allowed_file_types: Optional[List[str] | None] = None
     max_file_size: int
 
 
-class Boards(BaseModel):
-    boards: List[Board]
+class BoardsRetrieve(BaseModel):
+    boards: List[BoardRetrieve]
 
 
-class BoardRecieve(BaseModel):
+class BoardCreate(BaseModel):
     tag: str
     title: str
     description: str

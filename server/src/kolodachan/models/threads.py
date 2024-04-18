@@ -2,13 +2,13 @@ from typing import List
 
 from pydantic import BaseModel
 
-from .comments import CommentSend
+from .comments import CommentRetrieve
 
 
-class Thread(BaseModel):
+class ThreadRetrieve(BaseModel):
     thread_number: int
-    comments: List[CommentSend]
+    comments: List[CommentRetrieve]
 
 
-class Threads(BaseModel):
-    threads: List[Thread]
+class ThreadsRetrieve(BaseModel):
+    threads: List[ThreadRetrieve]
