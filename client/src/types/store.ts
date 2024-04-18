@@ -3,13 +3,14 @@ import { Board } from '.';
 export type UserSubscriptionsSliceState = {
   favoriteThreads: string[];
   userComments: string[];
-  userThreadSubscriptions: string[];
+  userThreads: string[];
+  isSubscribedToOwnComments: boolean;
+  isSubscribedToOwnThreads: boolean;
 };
 
 export type BoardSliceState = {
   board: Board | null;
   loadingStatus: Status;
-  id: string;
 };
 
 export enum Status {

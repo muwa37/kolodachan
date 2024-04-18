@@ -14,7 +14,7 @@ export type Board = {
   id: string;
   description: string;
   info: string;
-  img: string;
+  image: string;
 };
 
 export type Thread = {

@@ -1,5 +1,6 @@
+import { selectBoard } from '@/store/board/selectors';
 import { Thread } from '@/types';
-import { getOneBoard } from './boards';
+import { useSelector } from 'react-redux';
 
 export function getThreads() {
   const threads: Thread[] = [
@@ -95,7 +96,7 @@ export function getOneThread(id: string): Thread {
 }
 
 export function getThreadsByBoard(boardId: string): Thread[] {
-  const title = getOneBoard(boardId)?.title;
+  const title = useSelector(selectBoard).board.title;
   const threads = getThreads();
   return threads.filter(thread => thread.board === title);
 }
