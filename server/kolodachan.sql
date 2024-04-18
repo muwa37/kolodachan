@@ -42,7 +42,7 @@ CREATE TABLE threads (
 
 CREATE TABLE comments (
     id serial PRIMARY KEY,
-    comment_id integer NOT NULL,
+    position_in_thread integer NOT NULL,
     thread_id integer REFERENCES threads(id),
     comment_number integer NOT NULL,
     title text NOT NULL CHECK (length(title) < 200),
@@ -64,12 +64,12 @@ CREATE TABLE files (
 );
 
 
-CREATE OR REPLACE FUNCTION set_comment_id ()
+CREATE OR REPLACE FUNCTION set_position_in_thread ()
     RETURNS TRIGGER
     AS $$
 BEGIN
     SELECT
-        count(1) INTO NEW.comment_id
+        count(1) INTO NEW.position_in_thread
     FROM
         comments
     WHERE
@@ -79,10 +79,10 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER "set_comment_id"
+CREATE OR REPLACE TRIGGER "set_position_in_thread"
     BEFORE INSERT ON comments
     FOR EACH ROW
-    EXECUTE PROCEDURE "set_comment_id" ();
+    EXECUTE PROCEDURE "set_position_in_thread" ();
 
 CREATE OR REPLACE FUNCTION set_new_comment_number ()
     RETURNS TRIGGER
