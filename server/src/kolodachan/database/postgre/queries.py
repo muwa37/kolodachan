@@ -16,22 +16,7 @@ CREATE_BOARD = \
     VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     '''
 
-GET_BOARDS = \
-    '''
-    SELECT
-        tag,
-        title,
-        description,
-        default_name,
-        name_change_allowed,
-        bumplimit,
-        max_message_length,
-        max_file_size
-    FROM boards
-    WHERE enabled = true
-    '''
-
-GET_BOARD = \
+GET_MULTIPLE_BOARDS = \
     '''
     SELECT
         id,
@@ -40,8 +25,25 @@ GET_BOARD = \
         description,
         default_name,
         name_change_allowed,
-        image,
         bumplimit,
+        max_message_length,
+        allowed_file_types,
+        max_file_size
+    FROM boards
+    WHERE enabled = true
+    '''
+
+GET_ONE_BOARD = \
+    '''
+    SELECT
+        id,
+        tag,
+        title,
+        description,
+        default_name,
+        name_change_allowed,
+        bumplimit,
+        max_message_length,
         allowed_file_types,
         max_file_size
     FROM boards
@@ -83,11 +85,11 @@ DELETE_BOARD = \
 CREATE_THREAD = \
     '''
     INSERT INTO threads(board_id)
-    VALUES(1$)
+    VALUES($1)
     RETURNING id
     '''
 
-GET_THREADS = \
+GET_MULTIPLE_THREADS = \
     '''
     SELECT id
     FROM threads
@@ -97,7 +99,7 @@ GET_THREADS = \
     OFFSET $3
     '''
 
-GET_THREAD = \
+GET_ONE_THREAD = \
     '''
     SELECT c.thread_id
     FROM comments as c
@@ -105,7 +107,7 @@ GET_THREAD = \
         ON c.thread_id = t.id
     WHERE t.board_id = $1
         AND c.comment_number = $2
-        AND c.comment_id = 0
+        AND c.position_in_thread = 0
     ORDER BY c.creation_date ASC
     '''
 
@@ -116,13 +118,56 @@ DELETE_THREAD = None
 CREATE_COMMENT = \
     '''
     INSERT INTO comments(
-            thread_id,
-            title,
-            message,
-            user_name,
-            sage
-            )
+        thread_id,  
+        user_name,
+        title,
+        message,
+        sage
+        )
     VALUES($1, $2, $3, $4, $5)
+    RETURNING id, comment_number
+    '''
+
+GET_MULTIPLE_COMMENTS = \
+    '''
+    SELECT
+        comment_number,
+        thread_id,
+        position_in_thread,
+        user_name,
+        title,
+        message,
+        sage
+    FROM comments
+    WHERE thread_id = $1
+    '''
+
+GET_ONE_COMMENT = \
+    '''
+    SELECT
+        comment_number,
+        thread_id,
+        position_in_thread,
+        user_name,
+        title,
+        message,
+        sage
+    FROM comments
+    WHERE 
     '''
 
 # files
+CREATE_FILE = \
+    '''
+    INSERT INTO files(
+        comment_id,
+        name,
+        full_link,
+        compressed_link,
+        extension,
+        size
+        )
+    VALUES(
+        $1, $2, $3, $4, $5, $6
+        )
+    '''
