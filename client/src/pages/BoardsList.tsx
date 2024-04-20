@@ -1,13 +1,16 @@
-import { Board } from '@/types';
+import { BoardResponse } from '@/types/api';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { CardList } from '../components/common/CardList';
 
 export const BoardsList = () => {
-  const [boards, setBoards] = useState<Board[] | null>(null);
+  const [boards, setBoards] = useState<BoardResponse[] | null>(null);
 
+  console.log(process.env.API_URL);
   const getBoards = async () => {
-    const { data } = await axios.get<Board[]>(process.env.API_URL + `/boards`);
+    const { data } = await axios.get<BoardResponse[]>(
+      process.env.API_URL + `/board`
+    );
     return data;
   };
 
