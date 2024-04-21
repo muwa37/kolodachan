@@ -16,7 +16,6 @@ export const Thread = () => {
   const {
     title: boardTitle,
     description,
-    info,
     image,
   } = useSelector(selectBoard).board;
   const comments = getCommentsByThread(threadId);
@@ -26,7 +25,7 @@ export const Thread = () => {
       <BoardHeader
         title={boardTitle}
         description={description}
-        info={info}
+        info={'info.html'}
         image={image}
       />
       <PostForm parentId={id} />

@@ -1,4 +1,4 @@
-import { Board } from '.';
+import { BoardResponse } from './api';
 
 export type UserSubscriptionsSliceState = {
   favoriteThreads: string[];
@@ -9,7 +9,7 @@ export type UserSubscriptionsSliceState = {
 };
 
 export type BoardSliceState = {
-  board: Board | null;
+  board: BoardResponse | null;
   loadingStatus: Status;
 };
 

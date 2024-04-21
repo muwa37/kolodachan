@@ -11,7 +11,6 @@ export const Main = () => {
         <Outlet />
         <UserSubscriptionPanel />
       </div>
-
       <Footer />
     </div>
   );

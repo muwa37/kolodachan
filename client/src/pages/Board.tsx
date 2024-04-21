@@ -26,7 +26,7 @@ export const Board = () => {
 
     const { board, loadingStatus } = useSelector(selectBoard);
 
-    const { title, description, info, image } = board;
+    const { title, description, image } = board;
 
     const toggleView = () => {
       setView(view === 'scroll' ? 'catalog' : 'scroll');
@@ -42,7 +42,7 @@ export const Board = () => {
         <BoardHeader
           title={title}
           description={description}
-          info={info}
+          info={'info.html'}
           image={image}
         />
         <PostForm parentId={title} />
