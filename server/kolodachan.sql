@@ -17,7 +17,7 @@ CREATE TABLE boards (
     default_name text NOT NULL DEFAULT 'Anonymous' CHECK (length(default_name) < 30),
     name_change_allowed boolean NOT NULL DEFAULT TRUE,
     max_threads integer NOT NULL DEFAULT 100,
-    bumplimit integer NOT NULL DEFAULT 500,
+    bump_limit integer NOT NULL DEFAULT 500,
     max_message_length integer NOT NULL DEFAULT 8192,
     allowed_file_types text[], 
     max_file_size integer NOT NULL DEFAULT 3145728,
@@ -35,7 +35,7 @@ CREATE TABLE rules (
 
 CREATE TABLE threads (
     id serial PRIMARY KEY,
-    board_id integer REFERENCES boards (id),
+    board_id integer NOT NULL REFERENCES boards (id),
     creation_date timestamp NOT NULL DEFAULT now(),
     bump_date timestamp
 );
@@ -43,7 +43,7 @@ CREATE TABLE threads (
 CREATE TABLE comments (
     id serial PRIMARY KEY,
     position_in_thread integer NOT NULL,
-    thread_id integer REFERENCES threads(id),
+    thread_id integer NOT NULL REFERENCES threads(id),
     comment_number integer NOT NULL,
     title text NOT NULL CHECK (length(title) < 200),
     message text NOT NULL CHECK (length(message) < 8192),
@@ -57,7 +57,7 @@ CREATE TABLE files (
     comment_id integer REFERENCES comments(id),
     size integer NOT NULL,
     name text NOT NULL CHECK (length(name) < 300),
-    extension text NOT NULL CHECK (length(extension) < 50),
+    mime_type text NOT NULL CHECK (length(mime_type) < 50),
     full_link text NOT NULL CHECK (length(full_link) < 400),
     compressed_link text CHECK (length(compressed_link) < 400),
     creation_date timestamp NOT NULL DEFAULT now()
@@ -126,7 +126,7 @@ CREATE OR REPLACE FUNCTION bump_limit (thread_qid int)
     AS $$
 DECLARE
     number_of_comments int;
-    DECLARE board_bumplimit int;
+    DECLARE board_bump_limit int;
 BEGIN
     SELECT
         count(1) INTO number_of_comments
@@ -135,7 +135,7 @@ BEGIN
     WHERE
         thread_id = thread_qid;
     SELECT
-        bumplimit INTO board_bumplimit
+        bump_limit INTO board_bump_limit
     FROM
         boards
     WHERE
@@ -146,7 +146,7 @@ BEGIN
                 threads
             WHERE
                 id = thread_qid);
-    IF number_of_comments >= board_bumplimit THEN
+    IF number_of_comments >= board_bump_limit THEN
         RETURN TRUE;
     ELSE
         RETURN FALSE;
