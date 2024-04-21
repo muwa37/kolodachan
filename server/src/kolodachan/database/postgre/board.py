@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from kolodachan.models import BoardCreate, BoardRetrieve, BoardsRetrieve
 
 from .base import BaseDb
@@ -10,17 +12,17 @@ class Board(BaseDb):
     async def create(self, board: BoardCreate):
         await self._execute(CREATE_BOARD, *board.dict().values())
 
-    async def get_many(self) -> BoardsRetrieve:
+    async def get_multiple(self) -> BoardsRetrieve:
         tmp_boards = await self._execute(GET_MULTIPLE_BOARDS)
-        boards = [
-            self._record_to_model(BoardRetrieve, board) for board in tmp_boards
-        ]
+        boards = [dict(board) for board in tmp_boards]
         boards = BoardsRetrieve(boards=boards)
         return boards
 
     async def get_one(self, tag: str) -> BoardRetrieve:
         board = await self._execute(GET_ONE_BOARD, tag)
-        board = self._record_to_model(BoardRetrieve, board[0])
+        if not board:
+            return
+        board = BoardRetrieve(**dict(board[0]))
         return board
 
     async def update(self, tag: str, board: BoardCreate):

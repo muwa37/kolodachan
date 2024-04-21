@@ -1,19 +1,29 @@
 # boards
 CREATE_BOARD = \
     '''
-    INSERT INTO boards(
-        tag,
-        title,
-        description,
-        default_name,
-        name_change_allowed,
-        max_threads,
-        bumplimit,
-        max_message_length,
-        allowed_file_types,
-        max_file_size
-        )
-    VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+INSERT INTO boards (
+    tag,
+    title,
+    image,
+    description,
+    default_name,
+    name_change_allowed,
+    max_threads,
+    bump_limit,
+    max_message_length,
+    allowed_file_types,
+    max_file_size)
+VALUES (
+    $1,
+    $2,
+    $3,
+    $4,
+    $5,
+    $6,
+    $7,
+    $8,
+    $9,
+    $10)
     '''
 
 GET_MULTIPLE_BOARDS = \
@@ -21,56 +31,68 @@ GET_MULTIPLE_BOARDS = \
     SELECT
         id,
         tag,
+        image,
         title,
         description,
         default_name,
         name_change_allowed,
-        bumplimit,
+        bump_limit,
         max_message_length,
         allowed_file_types,
         max_file_size
-    FROM boards
-    WHERE enabled = true
+    FROM
+        boards
+    WHERE
+        enabled = TRUE
     '''
 
 GET_ONE_BOARD = \
     '''
     SELECT
         id,
+        image,
         tag,
         title,
         description,
         default_name,
         name_change_allowed,
-        bumplimit,
+        bump_limit,
         max_message_length,
         allowed_file_types,
         max_file_size
-    FROM boards
-    WHERE tag = $1
+    FROM
+        boards
+    WHERE
+        tag = $1
     '''
 
 UPDATE_BOARD = \
     '''
-    UPDATE boards
-        SET(tag = $1,
+    UPDATE
+        boards
+    SET
+        (tag = $1,
             title = $2,
             description = $3,
             default_name = $4,
             name_change_allowed = $5,
             max_threads = $6,
-            bumplimit = $7,
+            bump_limit = $7,
             max_message_length = $8,
             allowed_file_types = $9,
             max_file_size = $10)
-    WHERE tag = $11
+    WHERE
+        tag = $11
     '''
 
 ENABLE_BOARD = \
     '''
-    UPDATE boards
-        SET(enabled = $1)
-    WHERE tag = $2
+    UPDATE
+        boards
+    SET
+        (enabled = $1)
+    WHERE
+        tag = $2
     '''
 
 # TODO: it dosen't work now, first need to delete all threads, comments, rules, etc.
@@ -84,31 +106,58 @@ DELETE_BOARD = \
 # threads
 CREATE_THREAD = \
     '''
-    INSERT INTO threads(board_id)
-    VALUES($1)
-    RETURNING id
+    INSERT INTO threads (
+        board_id)
+    VALUES (
+        $1)
+    RETURNING
+        id
     '''
 
 GET_MULTIPLE_THREADS = \
     '''
-    SELECT id
-    FROM threads
-    WHERE board_id = $1
-    ORDER BY bump_date DESC
-    LIMIT $2
-    OFFSET $3
+    SELECT
+        c.thread_id,
+        c.id,
+        c.comment_number,
+        c.position_in_thread,
+        c.user_name,
+        c.title,
+        c.message,
+        c.sage,
+        c.creation_date
+    FROM
+        threads AS t
+        JOIN comments AS c ON t.id = c.thread_id
+    WHERE
+        t.board_id = $1
+        AND c.position_in_thread = 0
+    ORDER BY
+        t.bump_date DESC
+    LIMIT $2 OFFSET $3
     '''
 
 GET_ONE_THREAD = \
     '''
-    SELECT c.thread_id
-    FROM comments as c
-        JOIN threads as t
-        ON c.thread_id = t.id
-    WHERE t.board_id = $1
+    SELECT
+        c.thread_id,
+        c.id,
+        c.comment_number,
+        c.position_in_thread,
+        c.user_name,
+        c.title,
+        c.message,
+        c.sage,
+        c.creation_date
+    FROM
+        comments AS c
+        JOIN threads AS t ON c.thread_id = t.id
+    WHERE
+        t.board_id = $1
         AND c.comment_number = $2
         AND c.position_in_thread = 0
-    ORDER BY c.creation_date ASC
+    ORDER BY
+        c.creation_date ASC
     '''
 
 # TODO: make proper query for deleting thread with all comments
@@ -117,57 +166,143 @@ DELETE_THREAD = None
 # comments
 CREATE_COMMENT = \
     '''
-    INSERT INTO comments(
-        thread_id,  
+    INSERT INTO comments (
+        thread_id,
         user_name,
         title,
         message,
-        sage
-        )
-    VALUES($1, $2, $3, $4, $5)
-    RETURNING id, comment_number
+        sage)
+    VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5)
+    RETURNING
+        id,
+        comment_number
+    '''
+
+CREATE_COMMENT_WITH_TN = \
+    '''
+    INSERT INTO comments (
+        thread_id,
+        user_name,
+        title,
+        message,
+        sage)
+    VALUES (
+        (
+        SELECT
+            t.id
+        FROM
+            threads AS t
+            JOIN comments AS c ON t.id = c.thread_id
+        WHERE
+            board_id = $1
+            AND c.position_in_thread = 0
+            AND c.comment_number = $2),
+        $3,
+        $4,
+        $5,
+        $6)
+    RETURNING
+        comment_number
     '''
 
 GET_MULTIPLE_COMMENTS = \
     '''
     SELECT
+        thread_id,
+        id,
+        comment_number,
+        position_in_thread,
+        user_name,
+        title,
+        message,
+        sage,
+        creation_date
+    FROM
+        comments
+    WHERE
+        thread_id = $1
+    ORDER BY
+        position_in_thread OFFSET $3
+    LIMIT $2
+    '''
+
+GET_MULTIPLE_COMMENTS_REVERSED = \
+    '''
+    SELECT
+        id,
         comment_number,
         thread_id,
         position_in_thread,
         user_name,
         title,
         message,
-        sage
-    FROM comments
-    WHERE thread_id = $1
+        sage,
+        creation_date
+    FROM
+        comments
+    WHERE
+        thread_id = $1
+    ORDER BY
+        position_in_thread DESC OFFSET $3
+    LIMIT $2
     '''
 
 GET_ONE_COMMENT = \
     '''
     SELECT
-        comment_number,
-        thread_id,
-        position_in_thread,
-        user_name,
-        title,
-        message,
-        sage
-    FROM comments
-    WHERE 
+        c.id,
+        c.comment_number,
+        c.thread_id,
+        c.position_in_thread,
+        c.user_name,
+        c.title,
+        c.message,
+        c.sage,
+        c.creation_date
+    FROM
+        comments AS c
+        JOIN threads AS t ON t.id = c.thread_id
+    WHERE
+        t.board_id = $1
+        AND c.comment_number = $2
     '''
 
 # files
 CREATE_FILE = \
     '''
-    INSERT INTO files(
+    INSERT INTO files (
         comment_id,
         name,
         full_link,
         compressed_link,
-        extension,
+        mime_type,
+        size)
+    VALUES (
+        $1,
+        $2,
+        $3,
+        $4,
+        $5,
+        $6)
+    '''
+
+GET_MULTIPLE_FILES = \
+    '''
+    SELECT
+        name,
+        full_link,
+        compressed_link,
+        mime_type,
         size
-        )
-    VALUES(
-        $1, $2, $3, $4, $5, $6
-        )
+    FROM
+        files
+    WHERE
+        comment_id = $1
+    ORDER BY
+        creation_date
     '''
