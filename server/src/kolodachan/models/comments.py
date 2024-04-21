@@ -1,7 +1,8 @@
+import json
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
 from .files import File
 
@@ -21,4 +22,11 @@ class CommentCreate(BaseModel):
     user_name: str
     title: str
     message: str
-    sage: Optional[bool] = True
+    sage: Optional[bool] = False
+
+    @model_validator(mode='before')
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
