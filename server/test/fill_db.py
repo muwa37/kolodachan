@@ -113,6 +113,7 @@ class DbFiller:
                     files = [file, file, file]
                 case 4:
                     files = [file, file, file, file]
+            print(thread_id)
 
             await self.db.comment.create(thread_id, comment, files)
 
@@ -126,7 +127,7 @@ async def main():
     except Exception as e:
         print(e)
 
-    boards = await filler.db.board.get_many()
+    boards = await filler.db.board.get_multiple()
     for board in boards.boards:
         for _ in range(100):
             await filler.create_thread(board)
