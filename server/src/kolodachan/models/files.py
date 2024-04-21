@@ -5,5 +5,5 @@ class File(BaseModel):
     name: str
     full_link: str
     compressed_link: str
-    extension: str
+    mime_type: str
     size: int
