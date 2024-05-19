@@ -44,6 +44,6 @@ uvicorn api:app --app-dir src/kolodachan/ --host 127.0.0.1:8000
 ```
 
 ## How to use:
-Go to <http://127.0.0.1:8000/docs> for documentation. 
+Go to <http://127.0.0.1:8000/docs> for documentation.  
 Default login and password for superadmin account is ***admin:admin***.  
 You can't change it now, i'll add this functionality later (na dnyah) :trollface:.  
