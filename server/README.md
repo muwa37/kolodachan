@@ -25,7 +25,7 @@ python3 -m venv .venv
 
 4. Activate virtual enviroment:
 > [!NOTE]
-> If you using windows :poop: figure out this step by yourself (or install linux :trollface:)    
+> If you using windows :poop: figure out this step by yourself (or install GNU/linux :trollface:)    
 you must add *../server/src/* to your *$PYTHONPATH* or imports won't work  
 ```console
 source activatevenv.sh
