@@ -45,5 +45,5 @@ uvicorn api:app --app-dir src/kolodachan/ --host 127.0.0.1:8000
 8. PROFIT
 
 # How to use:
-Default login and password for superadmin account is admin:admin 
+Default login and password for superadmin account is admin:admin  
 You cant change it now, i'll add this functionality later (na dnyah) :trollface:
