@@ -22,6 +22,6 @@
 /server/config.toml
 /server/files
 /server/test/wordlist.txt
-
+/server/.env
 __pycache__/
 .pyc
