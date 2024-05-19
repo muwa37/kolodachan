@@ -1,46 +1,50 @@
-:trollface:
-Backend app for AIB
+:trollface:  
+# Backend app for AIB
 
-# How to run: 
+## How to run: 
 
-To run kolodachan backend api you *MUST* install postgresql first!   
-https://www.postgresql.org/download/
+To run kolodachan backend api you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
 
-1. Run this command to create tables in your database (change to your user/host/database) 
+
+Run this command to create tables in your database (change to your user/host/database):
 ```console
 psql -U user -h localhost -d database -f kolodachan.sql
 ```
 
-2. Create .env file inside ../server/ folder:
+Create .env file inside *../server/* folder:
 ```python
 DB_URL = 'postgres://user:password@127.0.0.1:5432/databaseName'
 
 TOKEN_EXPIRE_DAYS = 14
 ``` 
 
-3. Create virtual environment:
+Create virtual environment:
 ```console
 python3 -m venv .venv
 ```
 
-4. Activate virtual enviroment:
+Activate virtual enviroment:
+> [!NOTE]
+> If you using windows :poop: figure out this step by yourself (or install GNU/Linux :trollface:).      
+> you must add *../server/src/* to your *$PYTHONPATH* or imports won't work.    
 ```console
-./activatevenv.sh
+source activatevenv.sh
 ```
-If you using windows figure out this step by yourself (or install linux :trollface:) 
 
-you should add ../server/src/ to your $PYTHONPATH or imports wont work
 
-5. Install nessesary packages:
+
+Install necessary packages:
 ```
 pip install -r requirements.txt
 ```
 
-6. Finally you can run api with command:
+Finally you can run api with command:
 ```
 uvicorn api:app --app-dir src/kolodachan/ --host 127.0.0.1:8000
 ```
 
-7. ???
+## How to use:
+Go to <http://127.0.0.1:8000/docs> for documentation.  
 
-8. PROFIT
+Default login and password for superadmin account is ***admin:admin***.  
+You can't change it now, i'll add this functionality later (na dnyah) :trollface:.  
