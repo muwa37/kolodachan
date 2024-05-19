@@ -39,6 +39,8 @@ app.include_router(file.router)
 
 @app.on_event('startup')
 async def startup_event():
+    if not os.path.exists('files'):
+        os.mkdir('files')
     app.state.db = PostgreInterface()
     await app.state.db.connect(db_url)
     app.state.filehandler = FileHandler()
