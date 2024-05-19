@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 DROP TABLE IF EXISTS files;
 
 DROP TABLE IF EXISTS comments;
@@ -8,6 +10,51 @@ DROP TABLE IF EXISTS rules;
 
 DROP TABLE IF EXISTS boards;
 
+DROP TABLE IF EXISTS users_actions;
+
+DROP TABLE IF EXISTS sessions;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    pid UUID NOT NULL UNIQUE DEFAULT uuid_generate_v4(),
+    username text NOT NULL UNIQUE,
+    hashed_password bytea NOT NULL,
+    email text NOT NULL UNIQUE,
+    role text NOT NULL DEFAULT 'user',
+    is_active boolean NOT NULL DEFAULT TRUE,
+    creation_date timestamp NOT NULL DEFAULT now()
+);
+
+INSERT INTO users (
+  username,
+  hashed_password,
+  email,
+  role
+)
+  VALUES(
+    'admin',
+    '$2b$14$dj93lpHCt2yiTGAQdeWiNOxmh3uOMMSTVkyWQIvNAhT29Nmb5ZcM6',
+    'samlple@example.com',
+    'superadmin'
+  );
+
+CREATE TABLE sessions (
+    id serial PRIMARY KEY,
+    token text NOT NULL,
+    user_pid UUID NOT NULL REFERENCES users(pid),
+    valid_until timestamp NOT NULL,
+    is_active boolean NOT NULL DEFAULT true,
+    creation_date timestamp NOT NULL DEFAULT now()
+);
+
+CREATE TABLE users_actions(
+    id serial PRIMARY KEY,
+    description text NOT NULL,
+    user_id integer REFERENCES users(id),
+    creation_date timestamp NOT NULL DEFAULT now()
+);
 
 CREATE TABLE boards (
     id serial PRIMARY KEY,
@@ -21,7 +68,7 @@ CREATE TABLE boards (
     max_message_length integer NOT NULL DEFAULT 8192,
     allowed_file_types text[], 
     max_file_size integer NOT NULL DEFAULT 3145728,
-    enabled boolean NOT NULL DEFAULT TRUE,
+    is_active boolean NOT NULL DEFAULT TRUE,
     creation_date timestamp NOT NULL DEFAULT now()
 );
 
