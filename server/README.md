@@ -1,7 +1,7 @@
 :trollface:  
 # Backend app for AIB
 
-## How to run (guide for frontenders) :trollface:: 
+## How to run: 
 
 To run kolodachan backend api you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
 
