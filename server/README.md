@@ -27,8 +27,7 @@ python3 -m venv .venv
 ```console
 ./activatevenv.sh
 ```
-If you using windows figure out this step by yourself (or install linux :trollface:) 
-
+If you using windows figure out this step by yourself (or install linux :trollface:)  
 you should add ../server/src/ to your $PYTHONPATH or imports wont work
 
 5. Install nessesary packages:
