@@ -1,8 +1,13 @@
-from fastapi import APIRouter, HTTPException, Request
-from kolodachan.database import PostgreInterface
-from kolodachan.models import BoardRetrieve, BoardsRetrieve
+from typing import Annotated
 
-router = APIRouter(prefix='/api/v1/board', tags=['board'])
+from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi.security import OAuth2PasswordBearer
+from kolodachan.database import PostgreInterface
+from kolodachan.dependences.security import get_current_active_user
+from kolodachan.models import (BoardCreate, BoardRetrieve, BoardsRetrieve,
+                               UserRecieve)
+
+router = APIRouter(prefix='/api/v1/boards', tags=['boards'])
 
 
 @router.get('/', response_model=BoardsRetrieve)
@@ -19,3 +24,17 @@ async def get_one_board(tag: str, request: Request):
     if not board:
         raise HTTPException(status_code=404)
     return board
+
+
+@router.post('/')
+async def create_board(
+    board: BoardCreate,
+    request: Request,
+    user: Annotated[UserRecieve, Depends(get_current_active_user)],
+):
+    print(user.role)
+    if not user.role == 'superadmin':
+        raise HTTPException(status_code=403)
+
+    db: PostgreInterface = request.app.state.db
+    await db.board.create(board)

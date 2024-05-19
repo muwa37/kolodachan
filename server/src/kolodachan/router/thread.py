@@ -5,7 +5,7 @@ from kolodachan.database import PostgreInterface
 from kolodachan.models import CommentCreate, ThreadRetrieve, ThreadsRetrieve
 from kolodachan.util.files import FileHandler
 
-router = APIRouter(prefix='/api/v1/board/{tag}/thread', tags=['thread'])
+router = APIRouter(prefix='/api/v1/board/{tag}/threads', tags=['threads'])
 
 
 @router.get('/', response_model=ThreadsRetrieve)
@@ -42,7 +42,7 @@ async def get_one_thread(request: Request,
     return thread
 
 
-@router.post('/', status_code=201)
+@router.post('/new', status_code=201)
 async def create_thread(request: Request,
                         tag: str,
                         comment: CommentCreate = Body(...),

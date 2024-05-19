@@ -5,10 +5,10 @@ from kolodachan.database import PostgreInterface
 from kolodachan.models import CommentCreate, CommentRetrieve
 from kolodachan.util.files import FileHandler
 
-router = APIRouter(prefix='/api/v1/board/{tag}', tags=['comment'])
+router = APIRouter(prefix='/api/v1/boards/{tag}', tags=['comments'])
 
 
-@router.get("/comment/{id}", tags=['comment'], response_model=CommentRetrieve)
+@router.get("/comments/{id}", response_model=CommentRetrieve)
 async def get_comment(request: Request, tag: str, id: int):
     db: PostgreInterface = request.app.state.db
     board = await db.board.get_one(tag)
@@ -20,7 +20,7 @@ async def get_comment(request: Request, tag: str, id: int):
     return comment
 
 
-@router.post('/thread/{id}/', status_code=201)
+@router.post('/threads/{id}/new', status_code=201)
 async def create_comment(request: Request,
                          tag: str,
                          thread_number: int,
