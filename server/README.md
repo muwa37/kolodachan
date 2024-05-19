@@ -3,7 +3,7 @@ Backend app for AIB
 
 # How to run: 
 
-To run kolodachan backend api you *MUST* install postgresql first:  
+To run kolodachan backend api you ***MUST*** install postgresql first:  
 https://www.postgresql.org/download/  
 
 1. Run this command to create tables in your database (change to your user/host/database) 
@@ -11,7 +11,7 @@ https://www.postgresql.org/download/
 psql -U user -h localhost -d database -f kolodachan.sql
 ```
 
-2. Create .env file inside ../server/ folder:
+2. Create .env file inside *../server/* folder:
 ```python
 DB_URL = 'postgres://user:password@127.0.0.1:5432/databaseName'
 
@@ -28,9 +28,9 @@ python3 -m venv .venv
 source activatevenv.sh
 ```
 If you using windows figure out this step by yourself (or install linux :trollface:)  
-you should add ../server/src/ to your $PYTHONPATH or imports wont work
+you should add *../server/src/* to your *$PYTHONPATH* or imports wont work
 
-5. Install nessesary packages:
+5. Install necessary packages:
 ```
 pip install -r requirements.txt
 ```
