@@ -1,7 +1,7 @@
-:trollface:
-Backend app for AIB
+:trollface:  
+# Backend app for AIB
 
-# How to run: 
+## How to run: 
 
 To run kolodachan backend api you ***MUST*** install postgresql first:  
 https://www.postgresql.org/download/  
@@ -44,6 +44,6 @@ uvicorn api:app --app-dir src/kolodachan/ --host 127.0.0.1:8000
 
 8. PROFIT
 
-# How to use:
+## How to use:
 Default login and password for superadmin account is ***admin:admin***  
 You can't change it now, i'll add this functionality later (na dnyah) :trollface:
