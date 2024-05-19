@@ -25,8 +25,8 @@ python3 -m venv .venv
 
 Activate virtual enviroment:
 > [!NOTE]
-> If you using windows :poop: figure out this step by yourself (or install GNU/linux :trollface:)    
-you must add *../server/src/* to your *$PYTHONPATH* or imports won't work  
+> If you using windows :poop: figure out this step by yourself (or install GNU/linux :trollface:).      
+> you must add *../server/src/* to your *$PYTHONPATH* or imports won't work.    
 ```console
 source activatevenv.sh
 ```
@@ -44,5 +44,6 @@ uvicorn api:app --app-dir src/kolodachan/ --host 127.0.0.1:8000
 ```
 
 ## How to use:
-Default login and password for superadmin account is ***admin:admin***  
-You can't change it now, i'll add this functionality later (na dnyah) :trollface:
+Go to *127.0.0.1:8000/docs* for documentation. 
+Default login and password for superadmin account is ***admin:admin***.  
+You can't change it now, i'll add this functionality later (na dnyah) :trollface:.  
