@@ -24,6 +24,7 @@ class BoardsRetrieve(BaseModel):
 class BoardCreate(BaseModel):
     tag: str
     title: str
+    image: str = ''
     description: str
     default_name: Optional[str] = 'Anonymous'
     name_change_allowed: Optional[bool] = True
