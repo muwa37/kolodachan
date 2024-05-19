@@ -14,20 +14,33 @@ class Comment(BaseDb):
                      thread_number: int,
                      comment: CommentCreate,
                      files: Optional[List[File] | None] = None) -> int:
-        comment = await self._execute(CREATE_COMMENT_WITH_TN, board_id, thread_number,
-                                      *comment.dict().values())
+        comment = await self._execute(
+            CREATE_COMMENT_WITH_TN,
+            board_id,
+            thread_number,
+            *comment.dict().values(),
+        )
+
         comment_number = comment[0].get('comment_number')
         comment_id = comment[0].get('id')
 
         if files:
             for file in files:
-                await self._execute(CREATE_FILE, comment_id,
-                                    *file.dict().values())
+                await self._execute(
+                    CREATE_FILE,
+                    comment_id,
+                    *file.dict().values(),
+                )
+
         return {'comment_number': comment_number}
 
     async def get_one(self, board_id: int, comment_number: int) -> Dict:
-        comment = await self._execute(GET_ONE_COMMENT, board_id,
-                                      comment_number)
+        comment = await self._execute(
+            GET_ONE_COMMENT,
+            board_id,
+            comment_number,
+        )
+
         files = await self._get_files(comment[0].get('id'))
         comment = dict(comment[0])
         comment['files'] = files

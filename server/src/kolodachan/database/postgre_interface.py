@@ -1,31 +1,12 @@
-import asyncio
-import tomllib
-
 import asyncpg
-from kolodachan.database.postgre import Board, Comment, Thread
+from kolodachan.database.postgre import Board, Comment, Session, Thread, User
 
 
 class PostgreInterface:
 
-    def __init__(self):
-        self.board: Board
-
-    async def connect(self, config: str):
+    async def connect(self, db_url: str) -> bool:
         try:
-            with open(config, 'rb') as file:
-                config = tomllib.load(file)['postgres']
-        except FileNotFoundError:
-            print('config.toml not found')
-            return False
-        try:
-            self.__pool = await asyncpg.create_pool(
-                database=config['dbname'],
-                user=config['user'],
-                host=config['host'],
-                port=config['port'],
-                password=config['password'],
-            )
-
+            self.__pool = await asyncpg.create_pool(db_url)
         except asyncpg.exceptions.InvalidAuthorizationSpecificationError as e:
             print(e)
             return False
@@ -33,6 +14,8 @@ class PostgreInterface:
         self.board = Board(self.__pool)
         self.thread = Thread(self.__pool)
         self.comment = Comment(self.__pool)
+        self.user = User(self.__pool)
+        self.session = Session(self.__pool)
 
         return True
 

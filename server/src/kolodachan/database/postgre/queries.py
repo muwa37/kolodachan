@@ -23,7 +23,8 @@ VALUES (
     $7,
     $8,
     $9,
-    $10)
+    $10,
+    $11)
     '''
 
 GET_MULTIPLE_BOARDS = \
@@ -305,4 +306,49 @@ GET_MULTIPLE_FILES = \
         comment_id = $1
     ORDER BY
         creation_date
+    '''
+# users
+CREATE_USER = \
+    '''
+    INSERT INTO users (username, hashed_password, email, role)
+        VALUES ($1, $2, $3, $4)
+    '''
+
+GET_ONE_USER = \
+    '''
+    SELECT
+        pid,
+        username,
+        hashed_password,
+        email,
+        role,
+        is_active
+    FROM
+        users
+    WHERE
+        username = $1
+    '''
+
+# sessions
+CREATE_SESSION = \
+    '''
+    INSERT INTO sessions(token, user_pid, valid_until)
+    VALUES($1, $2, $3)
+    '''
+
+GET_USER_BY_SESSION = \
+    '''
+    SELECT
+        u.pid,
+        u.username,
+        u.email,
+        u.role,
+        u.is_active
+    FROM
+        sessions AS s
+        JOIN users AS u ON s.user_pid = u.pid
+    WHERE
+        s.token = $1
+        AND s.is_active = TRUE
+        AND s.valid_until > now()
     '''
