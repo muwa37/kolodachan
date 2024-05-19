@@ -3,8 +3,8 @@ Backend app for AIB
 
 # How to run: 
 
-To run kolodachan backend api you *MUST* install postgresql first!   
-https://www.postgresql.org/download/
+To run kolodachan backend api you *MUST* install postgresql first:  
+https://www.postgresql.org/download/  
 
 1. Run this command to create tables in your database (change to your user/host/database) 
 ```console
