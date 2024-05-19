@@ -3,7 +3,7 @@
 
 ## How to run: 
 
-To run kolodachanAPI you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
+To run KolodachanAPI you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
 
 
 Run this command to create tables in your database (change to your user/host/database):
