@@ -6,7 +6,7 @@
 To run kolodachan backend api you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
 
 
-1. Run this command to create tables in your database (change to your user/host/database) 
+1. Run this command to create tables in your database (change to your user/host/database):
 ```console
 psql -U user -h localhost -d database -f kolodachan.sql
 ```
@@ -27,8 +27,9 @@ python3 -m venv .venv
 ```console
 source activatevenv.sh
 ```
-If you using windows :poop: figure out this step by yourself (or install linux :trollface:)  
-you must add *../server/src/* to your *$PYTHONPATH* or imports won't work
+> [!NOTE]
+> If you using windows :poop: figure out this step by yourself (or install linux :trollface:)    
+you must add *../server/src/* to your *$PYTHONPATH* or imports won't work  
 
 5. Install necessary packages:
 ```
