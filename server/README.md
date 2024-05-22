@@ -3,7 +3,7 @@
 
 ## How to run: 
 
-To run kolodachan backend api you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first:  
+To run KolodachanAPI you **MUST** install [PostgreSQL](https://www.postgresql.org/download/) first.   
 
 
 Run this command to create tables in your database (change to your user/host/database):
@@ -25,7 +25,7 @@ python3 -m venv .venv
 
 Activate virtual enviroment:
 > [!NOTE]
-> If you using windows :poop: figure out this step by yourself (or install GNU/Linux :trollface:).      
+> If you use windows :poop: figure out this step by yourself (or install GNU/Linux :trollface:).      
 > you must add *../server/src/* to your *$PYTHONPATH* or imports won't work.    
 ```console
 source activatevenv.sh
