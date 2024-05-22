@@ -44,7 +44,7 @@ GET_MULTIPLE_BOARDS = \
     FROM
         boards
     WHERE
-        enabled = TRUE
+       is_active = TRUE
     '''
 
 GET_ONE_BOARD = \

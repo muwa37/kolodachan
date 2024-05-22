@@ -60,6 +60,7 @@ CREATE TABLE boards (
     id serial PRIMARY KEY,
     tag text NOT NULL UNIQUE CHECK (length(tag) < 10),
     title text NOT NULL CHECK (length(title) < 40),
+    image text DEFAULT '',
     description text NOT NULL CHECK (length(description) < 500),
     default_name text NOT NULL DEFAULT 'Anonymous' CHECK (length(default_name) < 30),
     name_change_allowed boolean NOT NULL DEFAULT TRUE,
