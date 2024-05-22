@@ -5,7 +5,7 @@ interface CardProps {
   title: string;
   description: string;
   image: string;
-  id: string;
+  id: string | number;
 }
 
 export const Card: FC<CardProps> = ({ title, description, image, id }) => {

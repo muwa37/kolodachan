@@ -8,10 +8,9 @@ export const BoardsList = () => {
 
   console.log(process.env.API_URL);
   const getBoards = async () => {
-    const { data } = await axios.get<BoardResponse[]>(
-      process.env.API_URL + `/board`
-    );
-    return data;
+    const { data } = await axios.get(process.env.API_URL + `/board`);
+    console.log(data.boards);
+    return data.boards;
   };
 
   useEffect(() => {

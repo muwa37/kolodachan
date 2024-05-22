@@ -1,10 +1,11 @@
-import { Board, Thread } from '@/types';
+import { Thread } from '@/types';
+import { BoardResponse } from '@/types/api';
 import { FC } from 'react';
 import { Card } from './Card';
 
 interface CardListProps {
   threadCards?: Thread[];
-  boardCards?: Board[];
+  boardCards?: BoardResponse[];
 }
 
 export const CardList: FC<CardListProps> = ({ threadCards, boardCards }) => {
